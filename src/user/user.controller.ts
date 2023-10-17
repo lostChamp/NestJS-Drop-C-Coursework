@@ -7,12 +7,7 @@ export class UserController {
 
   @Get("/da")
   async sendDa(@Res() res: Response) {
-    return res.render(
-      "user",
-      {
-        da: "pizda"
-      }
-    );
+
   }
 
 }

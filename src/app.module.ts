@@ -8,10 +8,8 @@ import { LotModule } from './lot/lot.module';
 import { RoleModule } from './role/role.module';
 import { ProfileController } from './profile/profile.controller';
 import { ProfileModule } from './profile/profile.module';
-import { ServiceService } from './service/service.service';
 import { ServiceModule } from './service/service.module';
 import { ManufacturerModule } from './manufacturer/manufacturer.module';
-import { ManufacturerService } from './manufacturer/manufacturer.service';
 import { ManufacturerController } from './manufacturer/manufacturer.controller';
 import { OrderModule } from './order/order.module';
 import { ConfigModule, ConfigService } from "@nestjs/config";
@@ -29,6 +27,8 @@ import { ServiceController } from "./service/service.controller";
 import { OrderController } from "./order/order.controller";
 import { CategoryController } from "./category/category.controller";
 import { RoleController } from "./role/role.controller";
+import { PagesController } from './pages/pages.controller';
+import { PagesModule } from './pages/pages.module';
 
 @Module({
   imports: [
@@ -65,6 +65,7 @@ import { RoleController } from "./role/role.controller";
     ManufacturerModule,
     OrderModule,
     CategoryModule,
+    PagesModule,
   ],
   controllers: [
     AuthController,
@@ -75,7 +76,8 @@ import { RoleController } from "./role/role.controller";
     ServiceController,
     OrderController,
     CategoryController,
-    RoleController
+    RoleController,
+    PagesController,
   ],
 })
 export class AppModule {}
