@@ -1,7 +1,37 @@
 <body>
 <main>
-  <div class="container">
-    sign-up
+  <div class="">
+    <div class="text-center my-4">
+      <h4>Регистрация</h4>
+    </div>
+    <form class="form-horizontal" method="post" action="/auth/sign-up/reg">
+
+      <div class="form-group my-3">
+        <label for="exampleInputEmail">Почтовый адрес</label>
+        <input type="email" name="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="example@gmail.com">
+      </div>
+
+      <div class="form-group my-3">
+        <label for="exampleInputFIO">ФИО</label>
+        <input type="text" name="full_name" class="form-control" id="exampleInputFIO" placeholder="Иванов Иван Иванович">
+      </div>
+
+      <div class="form-group my-3">
+        <label for="exampleInputPhone">Телефон</label>
+        <input type="text" name="phone_number" class="form-control" id="exampleInputPhone" placeholder="89655305882">
+      </div>
+
+      <div class="form-group my-3">
+        <label for="exampleInputPassword">Пароль</label>
+        <input type="password" name="password" class="form-control" id="exampleInputPassword" placeholder="Пароль">
+      </div>
+
+      <div class="form-group my-3">
+        <label for="repeatInputPassword">Повторите пароль</label>
+        <input type="password" name="repeat_password" class="form-control" id="repeatInputPassword" placeholder="Повторите пароль">
+      </div>
+      <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+    </form>
   </div>
 </main>
 </body>
