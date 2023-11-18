@@ -9,13 +9,13 @@ export class UserEntity {
   @Column({nullable: false, unique: true, type: "varchar"})
   email: string;
 
-  @Column({nullable: false, unique: true, type: "varchar"})
+  @Column({nullable: false, type: "varchar"})
   password: string;
 
-  @Column({nullable: false, unique: true, type: "varchar"})
+  @Column({nullable: false, type: "varchar"})
   full_name: string;
 
-  @Column({nullable: false, unique: true, type: "varchar"})
+  @Column({nullable: false, type: "varchar"})
   phone_number: string;
 
   @CreateDateColumn()
