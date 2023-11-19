@@ -1,4 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {RoleEntity} from "../../role/entity/role.entity";
+
 
 
 @Entity("user")
@@ -17,6 +19,12 @@ export class UserEntity {
 
   @Column({nullable: false, type: "varchar"})
   phone_number: string;
+
+  @ManyToOne(() => RoleEntity, (role) => role.users, {
+    onDelete: "CASCADE"
+  })
+  @JoinColumn({name: "role_id"})
+  role: RoleEntity;
 
   @CreateDateColumn()
   created_at: Date;

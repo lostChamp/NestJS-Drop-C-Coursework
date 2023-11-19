@@ -5,6 +5,7 @@ import {UserService} from "../user/user.service";
 import {AuthController} from "./auth.controller";
 import {AuthService} from "./auth.service";
 import {UserModule} from "../user/user.module";
+import { RoleModule } from "../role/role.module";
 @Module({
     imports: [
         JwtModule.register({
@@ -13,7 +14,8 @@ import {UserModule} from "../user/user.module";
                 expiresIn: "24h"
             }
         }),
-        UserModule
+        UserModule,
+        RoleModule
     ],
     controllers: [
         AuthController

@@ -12,4 +12,5 @@ export class PagesController {
     async homePage(@Res() res: Response) {
         return res.render("home");
     }
+
 }

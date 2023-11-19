@@ -1,4 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { RoleRepository } from "./repository/role.entity";
 
 @Injectable()
-export class RoleService {}
+export class RoleService {
+  constructor(private readonly roleRepository: RoleRepository) {}
+
+  async getRoleByValue(value: string) {
+    return this.roleRepository.getRoleByValue(value);
+  }
+}

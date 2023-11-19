@@ -12,9 +12,10 @@ export class UserRepository {
     ) {
     }
 
-    async createUser(info: CreateUserDto) {
+    async createUser(info: CreateUserDto, roleInfo: object) {
         const user = this.UserModel.create({
             ...info,
+            role: roleInfo["role"],
             created_at: new Date(),
         });
         const newUser = await this.UserModel.save(
@@ -24,7 +25,12 @@ export class UserRepository {
     }
 
     async getUserByEmail(email: string) {
-        const user = await this.UserModel.findOneBy({ email: email });
+        const user = await this.UserModel.findOne({
+            where: {
+                email: email,
+            },
+            relations: ["role"]
+        });
         return user;
     }
 }
