@@ -32,8 +32,7 @@ export class AuthService {
     }
 
     private async generateToken(user) {
-        console.log(user);
-        const payload = {email: user.email, id: user.id, roles: user.role.value, profile: user.profile}
+        const payload = {email: user.email, id: user.id, roles: user.role.value, name: user.full_name, profile: user.profile}
         return {
             token: this.jwtService.sign(payload)
         }
@@ -41,6 +40,9 @@ export class AuthService {
 
     private async validateUser(userDto: LoginDto) {
         const user = await this.userService.getUserByEmail(userDto.email);
+        if(!user) {
+            throw new UnauthorizedException({message: "Неверный логин/пароль"});
+        }
         const passwordEquals = await bcrypt.compare(userDto.password, user.password);
         if(user && passwordEquals) {
             return user;

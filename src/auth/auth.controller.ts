@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, Res, Session, UseGuards } from "@nestjs/common";
+import { Body, Controller, ExecutionContext, Get, Post, Req, Res, Session, UseGuards } from "@nestjs/common";
 import {Request, Response} from "express";
 import { CreateUserDto } from "../user/dto/create.user.dto";
 import { LoginDto } from "./dto/login.dto";
@@ -30,19 +30,24 @@ export class AuthController {
   }
 
   @Post("/register/gateway")
-  async registerGateway(@Body() info: CreateUserDto, @Res() res: Response, @Session() session: Record<string, any>) {
+  async registerGateway(@Body() info: CreateUserDto, @Res() res: Response, @Req() req: Request) {
     const newUser = await this.authService.registration(info);
-    session.token = newUser["token"];
+    const cookie = req.cookies.jwtToken;
+    if (!cookie) {
+      res.cookie('jwtToken', newUser["token"], { maxAge: 900000, httpOnly: true });
+    }
     if(newUser) {
       return res.redirect(`${process.env.BASE_URL}/home`);
     }
   }
 
   @Post("/login/gateway")
-  async loginGateway(@Body() info: LoginDto, @Session() session: Record<string, any>, @Res() res: Response) {
+  async loginGateway(@Body() info: LoginDto, @Res() res: Response, @Req() req: Request) {
     const token = await this.authService.login(info);
-    session.token = token["token"];
-    console.log(token);
+    const cookie = req.cookies.jwtToken;
+    if (!cookie) {
+      res.cookie('jwtToken', token["token"], { maxAge: 900000, httpOnly: true });
+    }
     if(token) {
       return res.redirect(`${process.env.BASE_URL}/home`);
     }

@@ -22,14 +22,29 @@
         </li>
       </ul>
       <div class="d-flex me-4">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="/auth/login">Войти</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/auth/sign-up">Регистрация</a>
-          </li>
-        </ul>
+        {{#if auth}}
+          {{#eq auth.roles "ADMIN"}}
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="/profile">{{auth.name}}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/exit">Выход</a>
+            </li>
+          </ul>
+          {{else}}
+
+          {{/eq}}
+        {{else}}
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="/auth/login">Войти</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/auth/sign-up">Регистрация</a>
+            </li>
+          </ul>
+        {{/if}}
       </div>
     </div>
   </div>

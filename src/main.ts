@@ -5,23 +5,12 @@ import { Logger } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as expressHbs from 'express-handlebars';
 import {join} from 'path';
-import * as session from "express-session";
-import * as passport from "passport";
+import * as cookieParser from "cookie-parser";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  app.use(
-      session({
-        secret: "some keyword",
-        resave: false,
-        saveUninitialized: false,
-        cookie: { maxAge: 3600000},
-      })
-  )
-
-  app.use(passport.initialize());
-  app.use(passport.session());
+  app.use(cookieParser());
 
   app.useStaticAssets(join(__dirname, "..", "public"));
   app.setBaseViewsDir(join(__dirname, "..", "views"));
@@ -31,6 +20,7 @@ async function bootstrap() {
     defaultLayout: "layout",
     extname: "hbs",
   }));
+
 
   const PORT = process.env.PORT || 8000;
   await app.listen(PORT);

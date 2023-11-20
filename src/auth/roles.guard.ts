@@ -1,6 +1,6 @@
 import {
     CanActivate,
-    ExecutionContext,
+    ExecutionContext, ForbiddenException,
     HttpException,
     HttpStatus,
     Injectable,
@@ -25,7 +25,8 @@ export class RolesGuard implements CanActivate {
             if(!requiredRoles) {
                 return true;
             }
-            const token = req.session.token;
+
+            const token = req.cookies.jwtToken
 
             if(!token) {
                 throw new UnauthorizedException({message: "Пользователь не авторизован"});
@@ -33,10 +34,11 @@ export class RolesGuard implements CanActivate {
 
             const user = this.jwtService.verify(token);
             req.user = user;
-
-            return user.roles.some(role => requiredRoles.includes(role.value));
+            if(requiredRoles.includes(req.user.roles)) {
+                return true;
+            }
         }catch (err) {
-            throw new HttpException({message: "Нет доступа"}, HttpStatus.FORBIDDEN);
+            throw new ForbiddenException();
         }
     }
 }

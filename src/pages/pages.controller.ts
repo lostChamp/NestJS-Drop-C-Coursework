@@ -1,16 +1,32 @@
-import {Controller, Get, Redirect, Res} from '@nestjs/common';
-import {Response} from "express";
+import { Controller, Get, Req, Res } from "@nestjs/common";
+import { Request, Response } from "express";
+import { JwtService } from "@nestjs/jwt";
 
 @Controller('')
 export class PagesController {
+    constructor(private jwtService: JwtService) {}
     @Get('')
     async goHomePage(@Res() res: Response) {
         return res.redirect("home");
     }
 
+    @Get("/exit")
+    async exit(@Res() res: Response, @Req() req: Request) {
+        const cookie = req.cookies;
+        for (let prop in cookie) {
+            if (!cookie.hasOwnProperty(prop)) {
+                continue;
+            }
+            res.cookie(prop, '', {expires: new Date(0)});
+        }
+        return res.redirect("home");
+    }
+
     @Get("/home")
-    async homePage(@Res() res: Response) {
-        return res.render("home");
+    async homePage(@Res() res: Response, @Req() req: Request) {
+        return res.render("home", {
+            auth: req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null,
+        });
     }
 
 }
