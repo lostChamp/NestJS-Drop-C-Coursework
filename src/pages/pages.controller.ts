@@ -24,9 +24,14 @@ export class PagesController {
 
     @Get("/home")
     async homePage(@Res() res: Response, @Req() req: Request) {
-        return res.render("home", {
-            auth: req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null,
-        });
+        const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
+        if(token) {
+            return res.render("home", {
+                auth: token,
+                role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+            });
+        }
+        return res.render("home");
     }
 
 }
