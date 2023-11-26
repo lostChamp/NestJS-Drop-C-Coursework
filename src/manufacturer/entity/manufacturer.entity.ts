@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { WareEntity } from "../../lot/entity/ware.entity";
 
 
 @Entity("manufacturer")
@@ -8,4 +9,7 @@ export class ManufacturerEntity {
 
   @Column({nullable: false, unique: true, type: "varchar"})
   name: string;
+
+  @OneToMany(() => WareEntity, (ware) => ware.man)
+  ware: WareEntity[];
 }

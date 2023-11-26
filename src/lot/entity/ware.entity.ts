@@ -1,4 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { CategoryEntity } from "../../category/entity/category.entity";
+import { ManufacturerEntity } from "../../manufacturer/entity/manufacturer.entity";
+import { OrderEntity } from "../../order/entity/order.entity";
 
 
 @Entity("ware")
@@ -6,20 +9,32 @@ export class WareEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({nullable: false, unique: true, type: "varchar"})
+  @Column({nullable: false, type: "varchar"})
   item: string;
 
 
-  @Column({nullable: false, unique: true, type: "varchar"})
+  @Column({nullable: true, type: "varchar"})
   image: string;
 
-  @Column({nullable: false, unique: true, type: "varchar"})
+  @Column({nullable: false, type: "varchar"})
   description: string;
 
-  @Column({nullable: false, unique: true, type: "numeric"})
+  @Column({nullable: false, type: "numeric"})
   quantity: number;
 
-  @Column({nullable: false, unique: true, type: "numeric"})
+  @Column({nullable: false, type: "numeric"})
   price: number;
 
+  @ManyToOne(() => CategoryEntity, (category) => category.ware,
+    {onDelete: "CASCADE"})
+  @JoinColumn({name: "category_id"})
+  category: CategoryEntity;
+
+  @ManyToOne(() => ManufacturerEntity, (man) => man.ware,
+    {onDelete: "CASCADE"})
+  @JoinColumn({name: "man_id"})
+  man: ManufacturerEntity;
+
+  @OneToMany(() => OrderEntity, (order) => order.ware)
+  order: OrderEntity[];
 }

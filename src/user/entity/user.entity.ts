@@ -1,5 +1,7 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import {RoleEntity} from "../../role/entity/role.entity";
+import { WareEntity } from "../../lot/entity/ware.entity";
+import { OrderEntity } from "../../order/entity/order.entity";
 
 
 
@@ -25,6 +27,9 @@ export class UserEntity {
   })
   @JoinColumn({name: "role_id"})
   role: RoleEntity;
+
+  @OneToMany(() => OrderEntity, (order) => order.user)
+  order: OrderEntity[];
 
   @CreateDateColumn()
   created_at: Date;

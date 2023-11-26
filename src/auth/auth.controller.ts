@@ -44,7 +44,7 @@ export class AuthController {
     const token = await this.authService.login(info);
     const cookie = req.cookies.jwtToken;
     if (!cookie) {
-      res.cookie('jwtToken', token["token"], { maxAge: 900000, httpOnly: true });
+      res.cookie('jwtToken', token["token"], { maxAge: 9000000, httpOnly: true });
     }
     if(token) {
       return res.redirect(`${process.env.BASE_URL}/home`);
