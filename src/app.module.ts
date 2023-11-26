@@ -29,6 +29,8 @@ import { CategoryController } from "./category/category.controller";
 import { RoleController } from "./role/role.controller";
 import { PagesController } from './pages/pages.controller';
 import { PagesModule } from './pages/pages.module';
+import { AdminController } from './admin/admin.controller';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -66,6 +68,7 @@ import { PagesModule } from './pages/pages.module';
     OrderModule,
     CategoryModule,
     PagesModule,
+    AdminModule,
   ],
   controllers: [
     AuthController,
@@ -78,6 +81,7 @@ import { PagesModule } from './pages/pages.module';
     CategoryController,
     RoleController,
     PagesController,
+    AdminController,
   ],
 })
 export class AppModule {}

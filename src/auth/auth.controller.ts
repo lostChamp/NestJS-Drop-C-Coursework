@@ -53,11 +53,5 @@ export class AuthController {
     }
   }
 
-  @Roles("ADMIN")
-  @UseGuards(RolesGuard)
-  @Get("/admin")
-  async admin() {
-
-  }
 
 }
