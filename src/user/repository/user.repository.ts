@@ -33,4 +33,9 @@ export class UserRepository {
         });
         return user;
     }
+
+    async getAllUsers() {
+        const users = await this.UserModel.find({relations: ["role"]});
+        return users;
+    }
 }

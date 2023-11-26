@@ -14,4 +14,8 @@ export class UserService {
     async getUserByEmail(email: string) {
         return this.userRepository.getUserByEmail(email);
     }
+
+    async getAllUsers() {
+        return this.userRepository.getAllUsers();
+    }
 }

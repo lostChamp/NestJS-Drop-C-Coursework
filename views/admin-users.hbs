@@ -1,0 +1,77 @@
+<body>
+<main>
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+          <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <span class="fs-5 d-none d-sm-inline">Меню</span>
+          </a>
+          <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+            <div class="">
+              <li class="nav-item border border-light border-2 rounded-pill mb-3">
+                <a href="/admin/users" class="nav-link align-middle px-5">
+                  <span class=" d-none d-sm-inline">Пользователи</span>
+                </a>
+              </li>
+              <li class="nav-item border border-light border-2 rounded-pill mb-3">
+                <a href="/admin/ware" class="nav-link align-middle px-5">
+                  <span class=" d-none d-sm-inline">Склад</span>
+                </a>
+              </li>
+              <li class="nav-item border border-light border-2 rounded-pill mb-3">
+                <a href="/admin/orders" class="nav-link align-middle px-5">
+                  <span class=" d-none d-sm-inline">Заказы</span>
+                </a>
+              </li>
+              <li class="nav-item border border-light border-2 rounded-pill mb-3">
+                <a href="/admin/service" class="nav-link align-middle px-5">
+                  <span class=" d-none d-sm-inline">Услуги</span>
+                </a>
+              </li>
+              <li class="nav-item border border-light border-2 rounded-pill mb-3">
+                <a href="/admin/mans" class="nav-link align-middle px-5">
+                  <span class=" d-none d-sm-inline">Производители</span>
+                </a>
+              </li>
+              <li class="nav-item border border-light border-2 rounded-pill mb-3">
+                <a href="/admin/category" class="nav-link align-middle px-5">
+                  <span class=" d-none d-sm-inline">Категории</span>
+                </a>
+              </li>
+            </div>
+          </ul>
+        </div>
+      </div>
+      <div class="col py-3 ms-3">
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Эл.почта</th>
+            <th scope="col">ФИО</th>
+            <th scope="col">Номер тел.</th>
+            <th scope="col">Создана</th>
+            <th scope="col">Роль</th>
+          </tr>
+          </thead>
+          <tbody>
+          {{#each people}}
+            {{#with this as | user |}}
+              <tr>
+                <th scope="row">{{user.id}}</th>
+                <td>{{user.email}}</td>
+                <td>{{user.full_name}}</td>
+                <td>{{user.phone_number}}</td>
+                <td>{{user.created_at}}</td>
+                <td>{{user.role.value}}</td>
+              </tr>
+            {{/with}}
+          {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
