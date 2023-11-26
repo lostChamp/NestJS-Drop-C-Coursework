@@ -11,4 +11,9 @@ export class LotService {
     return wares;
   }
 
+  async getAllWareForUsers() {
+    const lots = await this.wareService.getAllWare();
+    return lots.filter((lot) => lot.quantity > 0);
+  }
+
 }

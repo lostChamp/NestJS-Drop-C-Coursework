@@ -12,4 +12,5 @@ export class WareRepository {
     const lots = await this.WareModel.find({relations: ["man", "category"]});
     return lots;
   }
+
 }
