@@ -1,6 +1,7 @@
-{{#each lot}}
-  {{#with this as | item |}}
+
     <div class="d-flex justify-content-center flex-wrap">
+    {{#each lot}}
+      {{#with this as | item |}}
       <div class="card m-3" style="width: 18rem;">
         <img src="{{item.image}}" class="card-img-top" alt="...">
         <div class="card-body">
@@ -9,6 +10,6 @@
           <a href="#" class="card-link">Заказать</a>
         </div>
       </div>
+      {{/with}}
+    {{/each}}
     </div>
-  {{/with}}
-{{/each}}

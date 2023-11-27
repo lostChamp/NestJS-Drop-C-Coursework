@@ -14,4 +14,13 @@ export class ServiceRepository{
     return services;
   }
 
+  async getServiceById(id: number) {
+    const service = await this.ServiceModel.findOne({
+      where: {
+        id: id
+      }
+    });
+    return service;
+  }
+
 }

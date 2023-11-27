@@ -9,10 +9,10 @@ export class OrderEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({nullable: false, unique: true, type: "varchar"})
+  @Column({nullable: false, type: "varchar"})
   description: string;
 
-  @Column({nullable: false, unique: true, type: "varchar"})
+  @Column({nullable: false, type: "varchar"})
   status: string;
 
   @ManyToOne(() => UserEntity, (user) => user.order,

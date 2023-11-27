@@ -11,4 +11,9 @@ export class ServiceService {
     return services;
   }
 
+  async getServiceById(id: number) {
+    const service = await this.serviceRepository.getServiceById(id);
+    return service;
+  }
+
 }
