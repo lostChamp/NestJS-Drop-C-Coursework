@@ -14,7 +14,7 @@ export class LotController {
     const lots = await this.lotService.getAllWareForUsers();
     return res.render("lots-product", {
       auth: token,
-      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+      role: token && token.roles === "ADMIN" ? "ADMIN" : null,
       lot: lots
     });
   }

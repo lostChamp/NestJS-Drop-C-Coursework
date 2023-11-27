@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Req, Res } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Req, Res, UseGuards } from "@nestjs/common";
 import { Request, Response } from "express";
 import { JwtService } from "@nestjs/jwt";
 import { ServiceService } from "./service.service";
 import { OrderService } from "../order/order.service";
 import { ServiceOrderDto } from "./dto/service-order.dto";
 import * as process from "process";
+import { JwtAuthGuard } from "../auth/jwt-auth-guard";
 
 @Controller('services')
 export class ServiceController {
@@ -19,7 +20,7 @@ export class ServiceController {
     const services = await this.serviceService.getAllServices();
     return res.render("service-product", {
       auth: token,
-      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+      role: token && token.roles === "ADMIN" ? "ADMIN" : null,
       service: services
     });
   }
@@ -30,7 +31,7 @@ export class ServiceController {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
     return res.render("service-order", {
       auth: token,
-      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+      role: token && token.roles === "ADMIN" ? "ADMIN" : null,
       service: service
     })
   }
@@ -39,8 +40,11 @@ export class ServiceController {
   async serviceOrderGateway(@Param("id", ParseIntPipe) id: number, @Req() req: Request,
                             @Res() res: Response, @Body() info: ServiceOrderDto) {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
-    const order = await this.orderService.createServiceOrder(id, info, token.id);
-    return res.redirect(`${process.env.BASE_URL}/home`);
+    if(token) {
+      const order = await this.orderService.createServiceOrder(id, info, token.id);
+      return res.redirect(`${process.env.BASE_URL}/home`);
+    }
+    return res.redirect(`${process.env.BASE_URL}/auth/sign-up`);
   }
 
 
