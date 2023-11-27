@@ -17,4 +17,9 @@ export class OrderService {
     const order = await this.orderRepository.createServiceOrder(id, info, user_id);
     return order;
   }
+
+  async createProductOrder(id: number, info: ServiceOrderDto, user_id: number) {
+    const order = await this.orderRepository.createLotsOrder(id, info, user_id);
+    return order;
+  }
 }

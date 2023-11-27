@@ -30,4 +30,21 @@ export class OrderRepository {
     );
     return newOrder;
   }
+
+  async createLotsOrder(id: number, info: ServiceOrderDto, user_id: number) {
+    const order = this.OrderModel.create({
+      description: info.description,
+      ware: {
+        id: id,
+      },
+      status: "В обработке",
+      user: {
+        id: user_id
+      }
+    });
+    const newOrder = await this.OrderModel.save(
+      order
+    );
+    return newOrder;
+  }
 }

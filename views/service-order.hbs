@@ -3,7 +3,7 @@
   <h3>{{service.name}}</h3>
   <p>Описание: {{service.description}}</p>
   <p>Цена: {{service.price}}</p>
-  <form method="post" action="/services/order/gateway/{{service.id}}">
+  <form method="post" class="mb-3" action="/services/order/gateway/{{service.id}}">
     <div class="mb-3">
       <label for="exampleFormControlTextarea1" class="form-label">Пожелания:</label>
       <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>

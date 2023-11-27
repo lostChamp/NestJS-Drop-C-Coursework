@@ -13,4 +13,15 @@ export class WareRepository {
     return lots;
   }
 
+  async getLotById(id: number) {
+    const lot = await this.WareModel.findOne({
+      relations: ["man", "category"],
+      where: {
+        id: id,
+      }
+    });
+
+    return lot;
+  }
+
 }

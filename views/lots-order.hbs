@@ -1,0 +1,16 @@
+<div class="container  mt-5">
+  <p><a class="a-for-services" href="/lots">Назад</a></p>
+  <h3>{{lot.item}}</h3>
+  <img src="{{lot.image}}" width="300px" height="300px">
+  <p>Описание: {{lot.description}}</p>
+  <p>Категория: {{lot.category.name}}</p>
+  <p>Производитель: {{lot.man.name}}</p>
+  <p>Цена: {{lot.price}}</p>
+  <form method="post" action="/lots/order/gateway/{{lot.id}}" class="mb-3">
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label">Пожелания:</label>
+      <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Заказать</button>
+  </form>
+</div>
