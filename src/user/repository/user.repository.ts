@@ -3,6 +3,7 @@ import {UserEntity} from "../entity/user.entity";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Injectable} from "@nestjs/common";
 import {CreateUserDto} from "../dto/create.user.dto";
+import { UserService } from "../user.service";
 
 @Injectable()
 export class UserRepository {
@@ -37,5 +38,28 @@ export class UserRepository {
     async getAllUsers() {
         const users = await this.UserModel.find({relations: ["role"]});
         return users;
+    }
+
+    async getUserById(id: number) {
+        const user = await this.UserModel.findOne({where: {
+            id: id
+        },
+        relations: ["role"]});
+        return user;
+    }
+
+    async deleteUserById(id: number) {
+        const user = await this.UserModel.findOne({
+            where: {
+                id: id
+            }
+        });
+
+        await this.UserModel.remove(user);
+        return;
+    }
+
+    async updateUserById(user: UserEntity) {
+        await this.UserModel.save(user);
     }
 }

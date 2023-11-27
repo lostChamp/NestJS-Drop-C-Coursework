@@ -22,4 +22,9 @@ export class OrderService {
     const order = await this.orderRepository.createLotsOrder(id, info, user_id);
     return order;
   }
+
+  async getFiveLastOrderForProfile(user_id: number) {
+    const orders = await this.orderRepository.getFiveLastOrderForProfile(user_id);
+    return orders;
+  }
 }

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from "@nestjs/common";
 import {JwtModule} from "@nestjs/jwt";
 import * as process from "process";
 import {AuthController} from "./auth.controller";
@@ -13,7 +13,7 @@ import { RoleModule } from "../role/role.module";
                 expiresIn: "24h"
             }
         }),
-        UserModule,
+        forwardRef(() => UserModule),
         RoleModule
     ],
     controllers: [

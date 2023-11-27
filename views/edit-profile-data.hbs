@@ -1,0 +1,19 @@
+<div class="container">
+  <a href="/profile/{{user.id}}" style="text-decoration: none"><p class="mt-3">Назад</p></a>
+  <h3 class="mt-3">Редактирование профиля</h3>
+  <form method="post" action="/user/edit/{{user.id}}/complete">
+    <div class="form-group mt-3">
+      <label for="exampleInputEmail1">Эл.почта:</label>
+      <input type="email" name="email" class="form-control" id="editProfileEmail" value="{{user.email}}" placeholder="Введите эл.почту">
+    </div>
+    <div class="form-group mt-3">
+      <label for="exampleInputEmail1">ФИО:</label>
+      <input type="text" name="full_name" class="form-control" id="editProfileFullName" value="{{user.full_name}}" placeholder="ФИО">
+    </div>
+    <div class="form-group mt-3">
+      <label for="exampleInputEmail1">Телефон:</label>
+      <input type="text" name="phone_number" class="form-control" id="editProfilePhoneNumber" value="{{user.phone_number}}" placeholder="Телефон">
+    </div>
+    <button type="submit" class="btn btn-primary mt-3 mb-3">Редактировать</button>
+  </form>
+</div>

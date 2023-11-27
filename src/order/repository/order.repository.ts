@@ -32,7 +32,7 @@ export class OrderRepository {
   }
 
   async createLotsOrder(id: number, info: ServiceOrderDto, user_id: number) {
-    const order = this.OrderModel.create({
+    const order = await this.OrderModel.create({
       description: info.description,
       ware: {
         id: id,
@@ -46,5 +46,21 @@ export class OrderRepository {
       order
     );
     return newOrder;
+  }
+
+  async getFiveLastOrderForProfile(user_id: number) {
+    const orders = await this.OrderModel.find({
+      where: {
+        user: {
+          id: user_id
+        },
+      },
+      relations: ["ware", "service"],
+      take: 5,
+      order: {
+        id: "DESC"
+      }
+    })
+    return orders;
   }
 }

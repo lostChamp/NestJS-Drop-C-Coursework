@@ -1,4 +1,4 @@
-import {HttpException, HttpStatus, Injectable, UnauthorizedException} from '@nestjs/common';
+import { forwardRef, HttpException, HttpStatus, Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import {CreateUserDto} from "../user/dto/create.user.dto";
 import * as bcrypt from "bcryptjs";
 import {JwtService} from "@nestjs/jwt";
@@ -8,7 +8,8 @@ import { RoleService } from "../role/role.service";
 @Injectable()
 export class AuthService {
 
-    constructor(private userService: UserService,
+    constructor(@Inject(forwardRef(() => UserService))
+                private userService: UserService,
                 private jwtService: JwtService,
                 private roleService: RoleService) {}
 
@@ -19,7 +20,7 @@ export class AuthService {
 
     async registration(userDto: CreateUserDto) {
         const candidate = await this.userService.getUserByEmail(userDto.email);
-        const role = await this.roleService.getRoleByValue("USER");
+        const role = await this.roleService.getRoleByValue("ADMIN");
         if(candidate) {
             throw new HttpException("Пользователь с таким mail существует", HttpStatus.BAD_REQUEST);
         }
@@ -31,7 +32,7 @@ export class AuthService {
         return this.generateToken(user);
     }
 
-    private async generateToken(user) {
+    async generateToken(user) {
         const payload = {email: user.email, id: user.id, roles: user.role.value, name: user.full_name, profile: user.profile}
         return {
             token: this.jwtService.sign(payload)
