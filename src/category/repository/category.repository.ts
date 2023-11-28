@@ -12,4 +12,10 @@ export class CategoryRepository {
     const categories = await this.CategoryModel.find();
     return categories;
   }
+
+  async getCategoryById(id: number) {
+    const category = await this.CategoryModel.findOne({where: {
+      id: id
+      }});
+  }
 }

@@ -5,6 +5,8 @@ import { JwtService } from "@nestjs/jwt";
 import * as process from "process";
 import { EditUserDto } from "./dto/edit.user.dto";
 import { AuthService } from "../auth/auth.service";
+import { EditPasswordDto } from "./dto/edit.password.dto";
+import { Roles } from "../auth/roles-auth.decorator";
 
 
 @Controller('/user')
@@ -13,7 +15,8 @@ export class UserController {
   constructor(private readonly userService: UserService,
               private readonly jwtService: JwtService,
               @Inject(forwardRef(() => AuthService))
-              private readonly authService: AuthService) {}
+              private readonly authService: AuthService
+              ) {}
 
   @Get("/delete/account/:id")
   async deleteUser(@Param("id", ParseIntPipe) id: number,
@@ -82,6 +85,34 @@ export class UserController {
       res.cookie('jwtToken', jwtToken["token"], { maxAge: 9000000, httpOnly: true });
     }
     return res.redirect(`${process.env.BASE_URL}/profile/${user.id}`);
+  }
+
+  @Post("/edit/password/:id/complete")
+  async editPasswordComplete(@Res() res: Response, @Req() req: Request,
+                             @Param("id", ParseIntPipe) id: number,
+                             @Body() newInfo: EditPasswordDto) {
+    if(newInfo.password === newInfo["passwordRepeat"]) {
+      let user = await this.userService.updatePassword(newInfo, id);
+      return res.redirect(`${process.env.BASE_URL}/profile/${user.id}`);
+    }
+
+  }
+
+  @Roles("ADMIN")
+  @Post("/edit/:id/admin")
+  async adminEditUser(@Res() res: Response, @Req() req: Request,
+                      @Param("id", ParseIntPipe) id: number,
+                      @Body() newInfo: EditUserDto) {
+    await this.userService.updateUserById(id, newInfo);
+    return res.redirect(`${process.env.BASE_URL}/admin/users`);
+  }
+
+  @Roles("ADMIN")
+  @Get("/delete/:id")
+  async adminDeleteUser(@Res() res: Response, @Req() req: Request,
+                        @Param("id", ParseIntPipe) id: number,) {
+    await this.userService.deleteUserById(id);
+    return res.redirect(`${process.env.BASE_URL}/admin/users`);
   }
 
 }

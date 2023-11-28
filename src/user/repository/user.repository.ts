@@ -4,6 +4,7 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {Injectable} from "@nestjs/common";
 import {CreateUserDto} from "../dto/create.user.dto";
 import { UserService } from "../user.service";
+import { EditPasswordDto } from "../dto/edit.password.dto";
 
 @Injectable()
 export class UserRepository {
@@ -61,5 +62,19 @@ export class UserRepository {
 
     async updateUserById(user: UserEntity) {
         await this.UserModel.save(user);
+    }
+
+    async updatePassword(newInfo: EditPasswordDto, id: number) {
+        const oldDataUser = await this.UserModel.findOne({
+            where: {
+                id: id
+            },
+            relations: ["role"]
+        });
+
+        oldDataUser.password = newInfo.password;
+        console.log(oldDataUser);
+        await this.UserModel.save(oldDataUser);
+        return oldDataUser;
     }
 }

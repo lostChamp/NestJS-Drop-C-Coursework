@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res, UseGuards } from "@nestjs/common";
+import { Controller, Get, Param, ParseIntPipe, Req, Res, UseGuards } from "@nestjs/common";
 import { Roles } from "../auth/roles-auth.decorator";
 import { RolesGuard } from "../auth/roles.guard";
 import { JwtAuthGuard } from "../auth/jwt-auth-guard";
@@ -123,5 +123,48 @@ export class AdminController {
         category: categories,
       });
     }
+  }
+
+  @Roles("ADMIN")
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get("/user/:id")
+  async editUserForm(@Res() res: Response, @Req() req: Request,
+                     @Param("id", ParseIntPipe) id: number) {
+
+    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
+    const user = await this.userService.getUserById(id);
+    return res.render("admin-edit-user", {
+      auth: token,
+      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+      user: user
+    })
+  }
+
+  @Roles("ADMIN")
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get("/category/:id")
+  async editCategoryForm(@Res() res: Response, @Req() req: Request,
+                         @Param("id", ParseIntPipe) id: number) {
+    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
+    const category = await this.categoryService.getCategoryById(id);
+    return res.render("admin-edit-category", {
+      auth: token,
+      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+      category: category,
+    })
+  }
+
+  @Roles("ADMIN")
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get("/service/:id")
+  async editServiceForm(@Res() res: Response, @Req() req: Request,
+                         @Param("id", ParseIntPipe) id: number) {
+    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
+    const service = await this.serviceService.getServiceById(id);
+    return res.render("admin-edit-service", {
+      auth: token,
+      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+      service: service,
+    })
   }
 }

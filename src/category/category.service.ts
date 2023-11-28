@@ -10,4 +10,9 @@ export class CategoryService {
     const categories = await this.categoryRepository.getAllCategories();
     return categories;
   }
+
+  async getCategoryById(id: number) {
+   const category = await this.categoryRepository.getCategoryById(id);
+   return category;
+  }
 }

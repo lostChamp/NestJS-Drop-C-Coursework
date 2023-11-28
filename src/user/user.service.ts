@@ -1,9 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import {CreateUserDto} from "./dto/create.user.dto";
 import {UserRepository} from "./repository/user.repository";
 import { EditUserDto } from "./dto/edit.user.dto";
 import * as bcrypt from "bcryptjs";
-import * as lodash from "lodash";
+import { EditPasswordDto } from "./dto/edit.password.dto";
+
 
 @Injectable()
 export class UserService {
@@ -47,5 +48,11 @@ export class UserService {
         }
         return user;
 
+    }
+
+    async updatePassword(newInfo: EditPasswordDto, id: number) {
+        newInfo.password = await bcrypt.hash(newInfo.password, 5);
+        const user = await this.userRepository.updatePassword(newInfo, id)
+        return user;
     }
 }
