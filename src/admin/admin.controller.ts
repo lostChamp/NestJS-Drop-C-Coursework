@@ -147,6 +147,7 @@ export class AdminController {
                          @Param("id", ParseIntPipe) id: number) {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
     const category = await this.categoryService.getCategoryById(id);
+    console.log(category);
     return res.render("admin-edit-category", {
       auth: token,
       role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
@@ -167,4 +168,52 @@ export class AdminController {
       service: service,
     })
   }
+
+  @Roles("ADMIN")
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get("/man/:id")
+  async editManForm(@Res() res: Response, @Req() req: Request,
+                        @Param("id", ParseIntPipe) id: number) {
+    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
+    const man = await this.manService.getManById(id);
+    return res.render("admin-edit-man", {
+      auth: token,
+      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+      man: man,
+    })
+  }
+
+  @Roles("ADMIN")
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get("/ware/:id")
+  async editWareForm(@Res() res: Response, @Req() req: Request,
+                    @Param("id", ParseIntPipe) id: number) {
+    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
+    const ware = await this.wareService.getLotById(id);
+    const mans = await this.manService.getAllMans();
+    const categories = await this.categoryService.getAllCategories();
+    return res.render("admin-edit-ware", {
+      auth: token,
+      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+      ware: ware,
+      man: mans,
+      category: categories,
+    })
+  }
+
+  @Roles("ADMIN")
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get("/order/:id")
+  async editOrderForm(@Res() res: Response, @Req() req: Request,
+                     @Param("id", ParseIntPipe) id: number) {
+    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
+    const order = await this.orderService.getOrderById(id);
+    console.log(order);
+    return res.render("admin-edit-order", {
+      auth: token,
+      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+      order: order,
+    })
+  }
+
 }

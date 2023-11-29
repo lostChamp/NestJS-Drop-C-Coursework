@@ -1,0 +1,100 @@
+<div class="container">
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark me-3">
+        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+          <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <span class="fs-5 d-none d-sm-inline">Меню</span>
+          </a>
+          <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+            <div class="">
+              <li class="nav-item border border-light border-2 rounded-pill mb-3">
+                <a href="/admin/users" class="nav-link align-middle px-5">
+                  <span class=" d-none d-sm-inline">Пользователи</span>
+                </a>
+              </li>
+              <li class="nav-item border border-light border-2 rounded-pill mb-3">
+                <a href="/admin/ware" class="nav-link align-middle px-5">
+                  <span class=" d-none d-sm-inline">Склад</span>
+                </a>
+              </li>
+              <li class="nav-item border border-light border-2 rounded-pill mb-3">
+                <a href="/admin/orders" class="nav-link align-middle px-5">
+                  <span class=" d-none d-sm-inline">Заказы</span>
+                </a>
+              </li>
+              <li class="nav-item border border-light border-2 rounded-pill mb-3">
+                <a href="/admin/service" class="nav-link align-middle px-5">
+                  <span class=" d-none d-sm-inline">Услуги</span>
+                </a>
+              </li>
+              <li class="nav-item border border-light border-2 rounded-pill mb-3">
+                <a href="/admin/mans" class="nav-link align-middle px-5">
+                  <span class=" d-none d-sm-inline">Производители</span>
+                </a>
+              </li>
+              <li class="nav-item border border-light border-2 rounded-pill mb-3">
+                <a href="/admin/category" class="nav-link align-middle px-5">
+                  <span class=" d-none d-sm-inline">Категории</span>
+                </a>
+              </li>
+            </div>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-5 mx-3">
+        <form method="post" action="/ware/edit/{{ware.id}}/admin">
+          <div class="form-group mt-3">
+            <img src="{{ware.image}}" width="200" height="200">
+          </div>
+          <div class="form-group mt-3">
+            <label for="exampleInputEmail1">Добавить фото: </label>
+            <input type="file" class="form-control">
+          </div>
+          <div class="form-group mt-3">
+            <label for="exampleInputEmail1">Название: </label>
+            <input type="text" name="full_name" class="form-control" id="editProfileFullName" value="{{ware.item}}" placeholder="ФИО">
+          </div>
+          <div class="form-group mt-3">
+            <label for="exampleInputEmail1">Описание:</label>
+            <input type="text" name="phone_number" class="form-control" id="editProfilePhoneNumber" value="{{ware.description}}" placeholder="Телефон">
+          </div>
+          <div class="form-group mt-3">
+            <label for="exampleInputEmail1">Количество: </label>
+            <input type="text" name="phone_number" class="form-control" id="editProfilePhoneNumber" value="{{ware.quantity}}" placeholder="Телефон">
+          </div>
+          <div class="form-group mt-3">
+            <label for="exampleInputEmail1">Цена: </label>
+            <input type="text" name="phone_number" class="form-control" id="editProfilePhoneNumber" value="{{ware.price}}" placeholder="Телефон">
+          </div>
+          <div class="form-group mt-3">
+            <label for="exampleInputEmail1">Категория: </label>
+            <select class="form-select" name="category">
+              <option value="">Выберите категорию</option>
+              {{#each category}}
+                {{#with this as | item |}}
+                  <option value="{{item.name}}">{{item.name}}</option>
+                {{/with}}
+              {{/each}}
+            </select>
+          </div>
+          <div class="form-group mt-3">
+            <label for="exampleInputEmail1">Производитель: </label>
+            <select class="form-select" name="man">
+              <option value="">Выберите производителя</option>
+              {{#each man}}
+                {{#with this as | item |}}
+                  <option value="{{item.name}}">{{item.name}}</option>
+                {{/with}}
+              {{/each}}
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary mt-3 mb-3 me-3">Редактировать</button>
+          <a href="/admin/users"><button type="button" class="btn btn-primary mt-3 mb-3 me-3">Отмена</button></a>
+          <a href="/ware/delete/{{user.id}}"><button type="button" class="btn btn-primary mt-3 mb-3 me-3">Удалить</button></a>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

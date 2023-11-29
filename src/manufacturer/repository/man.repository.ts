@@ -12,4 +12,13 @@ export class ManufacturerRepository {
     const man = await this.ManModel.find();
     return man;
   }
+
+  async getManById(id: number) {
+    const man = await this.ManModel.findOne({
+      where: {
+        id: id
+      }
+    })
+    return man;
+  }
 }

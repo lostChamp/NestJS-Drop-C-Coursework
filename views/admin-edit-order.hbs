@@ -43,23 +43,22 @@
         </div>
       </div>
       <div class="mt-5 mx-3">
-        <form method="post" action="/user/edit/{{user.id}}/admin">
+        <p>Пользователь: {{order.user.email}}</p>
+        <p>Товар/услуга: {{order.ware.item}}{{order.service.name}}</p>
+        <form method="post" action="/order/edit/{{order.id}}/admin">
           <div class="form-group mt-3">
-            <label for="exampleInputEmail1">Эл.почта:</label>
-            <input type="email" name="email" class="form-control" id="editProfileEmail" value="{{user.email}}" placeholder="Введите эл.почту">
+            <label for="exampleInputEmail1">Описание: </label>
+            <input type="text" name="full_name" class="form-control" id="editProfileFullName" value="{{order.description}}" placeholder="ФИО">
           </div>
           <div class="form-group mt-3">
-            <label for="exampleInputEmail1">ФИО:</label>
-            <input type="text" name="full_name" class="form-control" id="editProfileFullName" value="{{user.full_name}}" placeholder="ФИО">
+            <label for="exampleInputEmail1">Статус: </label>
+            <input type="text" name="full_name" class="form-control" id="editProfileFullName" value="{{order.status}}" placeholder="ФИО">
           </div>
-          <div class="form-group mt-3">
-            <label for="exampleInputEmail1">Телефон:</label>
-            <input type="text" name="phone_number" class="form-control" id="editProfilePhoneNumber" value="{{user.phone_number}}" placeholder="Телефон">
-          </div>
-          <button type="submit" class="btn btn-primary mt-3 mb-3">Редактировать</button>
+          <button type="submit" class="btn btn-primary mt-3 mb-3 me-3">Редактировать</button>
+          <a href="/admin/users"><button type="button" class="btn btn-primary mt-3 mb-3 me-3">Отмена</button></a>
+          <a href="/ware/delete/{{user.id}}"><button type="button" class="btn btn-primary mt-3 mb-3 me-3">Удалить</button></a>
         </form>
-        <a href="/user/delete/{{user.id}}"><button class="d-flex btn btn-primary mt-3 mb-3">Удалить</button></a>
-        <a href="/admin/users"><button class="btn btn-primary mt-3 mb-3">Отмена</button></a>
+
       </div>
     </div>
   </div>

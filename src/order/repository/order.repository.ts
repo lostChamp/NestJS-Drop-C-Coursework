@@ -63,4 +63,14 @@ export class OrderRepository {
     })
     return orders;
   }
+
+  async getOrderById(id: number) {
+    const order = await this.OrderModel.findOne({
+      where: {
+        id: id
+      },
+      relations: ["user", "ware", "service"]
+    });
+    return order;
+  }
 }

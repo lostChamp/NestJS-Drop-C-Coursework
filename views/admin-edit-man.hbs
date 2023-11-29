@@ -43,23 +43,15 @@
         </div>
       </div>
       <div class="mt-5 mx-3">
-        <form method="post" action="/user/edit/{{user.id}}/admin">
+        <form method="post" action="/service/edit/{{man.id}}/admin">
           <div class="form-group mt-3">
-            <label for="exampleInputEmail1">Эл.почта:</label>
-            <input type="email" name="email" class="form-control" id="editProfileEmail" value="{{user.email}}" placeholder="Введите эл.почту">
-          </div>
-          <div class="form-group mt-3">
-            <label for="exampleInputEmail1">ФИО:</label>
-            <input type="text" name="full_name" class="form-control" id="editProfileFullName" value="{{user.full_name}}" placeholder="ФИО">
-          </div>
-          <div class="form-group mt-3">
-            <label for="exampleInputEmail1">Телефон:</label>
-            <input type="text" name="phone_number" class="form-control" id="editProfilePhoneNumber" value="{{user.phone_number}}" placeholder="Телефон">
+            <label for="exampleInputEmail1">Категория</label>
+            <input type="text" name="category_name" class="form-control" id="editProfileEmail" value="{{man.name}}" placeholder="Введите категорию">
           </div>
           <button type="submit" class="btn btn-primary mt-3 mb-3">Редактировать</button>
         </form>
-        <a href="/user/delete/{{user.id}}"><button class="d-flex btn btn-primary mt-3 mb-3">Удалить</button></a>
-        <a href="/admin/users"><button class="btn btn-primary mt-3 mb-3">Отмена</button></a>
+        <a href="/service/delete/{{man.id}}"><button class="d-flex btn btn-primary mt-3 mb-3">Удалить</button></a>
+        <a href="/admin/mans"><button class="btn btn-primary mt-3 mb-3">Отмена</button></a>
       </div>
     </div>
   </div>

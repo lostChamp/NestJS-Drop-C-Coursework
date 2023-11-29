@@ -44,6 +44,9 @@
         </div>
       </div>
       <div class="col py-3 ms-3">
+        <div class="mb-3">
+          <a href=""><button class="btn btn-primary">Добавить</button></a>
+        </div>
         <table class="table">
           <thead>
           <tr>
@@ -61,7 +64,7 @@
             {{#with this as | item |}}
               <tr>
                 <th scope="row">{{item.id}}</th>
-                <td>{{item.item}}</td>
+                <td><a href="/admin/ware/{{item.id}}">{{item.item}}</a></td>
                 <td>{{item.description}}</td>
                 <td>{{item.quantity}}</td>
                 <td>{{item.price}}</td>

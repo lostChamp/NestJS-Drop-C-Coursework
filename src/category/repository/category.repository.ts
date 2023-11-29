@@ -17,5 +17,6 @@ export class CategoryRepository {
     const category = await this.CategoryModel.findOne({where: {
       id: id
       }});
+    return category
   }
 }

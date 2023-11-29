@@ -27,4 +27,9 @@ export class OrderService {
     const orders = await this.orderRepository.getFiveLastOrderForProfile(user_id);
     return orders;
   }
+
+  async getOrderById(id: number) {
+    const order = await this.orderRepository.getOrderById(id);
+    return order;
+  }
 }
