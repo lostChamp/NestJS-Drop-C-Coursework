@@ -43,14 +43,14 @@
         </div>
       </div>
       <div class="mt-5 mx-3">
-        <form method="post" action="/service/edit/{{man.id}}/admin">
+        <form method="post" action="/man/edit/{{man.id}}/admin">
           <div class="form-group mt-3">
-            <label for="exampleInputEmail1">Категория</label>
-            <input type="text" name="category_name" class="form-control" id="editProfileEmail" value="{{man.name}}" placeholder="Введите категорию">
+            <label for="manMan">Производитель: </label>
+            <input type="text" name="man_name" class="form-control" id="manMan" value="{{man.name}}" placeholder="Введите производителя">
           </div>
           <button type="submit" class="btn btn-primary mt-3 mb-3">Редактировать</button>
         </form>
-        <a href="/service/delete/{{man.id}}"><button class="d-flex btn btn-primary mt-3 mb-3">Удалить</button></a>
+        <a href="/man/delete/{{man.id}}"><button class="d-flex btn btn-primary mt-3 mb-3">Удалить</button></a>
         <a href="/admin/mans"><button class="btn btn-primary mt-3 mb-3">Отмена</button></a>
       </div>
     </div>

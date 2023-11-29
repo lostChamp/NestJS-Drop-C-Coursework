@@ -45,10 +45,10 @@
       <div class="mt-5 mx-3">
         <form method="post" action="/category/edit/{{category.id}}/admin">
           <div class="form-group mt-3">
-            <label for="exampleInputEmail1">Категория</label>
-            <input type="text" name="category_name" class="form-control" id="editProfileEmail" value="{{category.name}}" placeholder="Введите категорию">
+            <label for="categoryCategory">Категория:</label>
+            <input type="text" name="category_name" class="form-control" id="categoryCategory" value="{{category.name}}" placeholder="Введите категорию">
           </div>
-          <button type="submit" class="btn btn-primary mt-3 mb-3">Редактировать</button>
+          <button type="submit" class="btn btn-primary mt-3 mb-3">Редактировать:</button>
         </form>
         <a href="/category/delete/{{category.id}}"><button class="d-flex btn btn-primary mt-3 mb-3">Удалить</button></a>
         <a href="/admin/category"><button class="btn btn-primary mt-3 mb-3">Отмена</button></a>
