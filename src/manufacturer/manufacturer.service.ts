@@ -18,6 +18,11 @@ export class ManufacturerService {
     return man;
   }
 
+  async getManByValue(value: string|number) {
+    const man = await this.manRepository.getManByValue(value);
+    return man;
+  }
+
   async createMan(info: CreateManDto) {
     const man = this.manRepository.createMan(info);
     return man;

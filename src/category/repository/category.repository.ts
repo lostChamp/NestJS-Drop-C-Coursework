@@ -21,6 +21,15 @@ export class CategoryRepository {
     return category
   }
 
+  async getCategoryByValue(value: string|number) {
+    const category = await this.CategoryModel.findOne({
+      where: {
+        name: value.toString()
+      }
+    })
+    return category;
+  }
+
   async createCategory(info: CreateCategoryDto) {
     const category = await this.CategoryModel.create({
       ...info

@@ -6,13 +6,17 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { WareEntity } from "./entity/ware.entity";
 import { JwtModule } from "@nestjs/jwt";
 import { OrderModule } from "../order/order.module";
+import { CategoryModule } from "../category/category.module";
+import { ManufacturerModule } from "../manufacturer/manufacturer.module";
 
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([WareEntity]),
     JwtModule,
-    OrderModule
+    OrderModule,
+    CategoryModule,
+    ManufacturerModule
   ],
   controllers: [LotController],
   providers: [LotService, WareRepository],

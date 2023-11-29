@@ -43,31 +43,30 @@
         </div>
       </div>
       <div class="mt-5 mx-3">
-        <form method="post" class="from-container" action="/ware/add/admin">
+        <form method="post" class="from-container" action="/lots/add/admin">
           <div class="form-group mt-3">
             <label for="wareImage">Добавить фото: </label>
-            <input type="file" id="wareImage" name="ware_image" class="form-control">
+            <input type="file" id="wareImage" name="image" class="form-control">
           </div>
           <div class="form-group mt-3">
             <label for="wareItem">Название: </label>
-            <input type="text" name="ware_item" class="form-control" id="wareItem" placeholder="Введите название">
+            <input type="text" name="item" class="form-control" id="wareItem" placeholder="Введите название" required>
           </div>
           <div class="form-group mt-3">
             <label for="wareDescription">Описание:</label>
-            <input type="text" name="ware_description" class="form-control" id="wareDescription" placeholder="Введите описание">
+            <input type="text" name="description" class="form-control" id="wareDescription" placeholder="Введите описание" required>
           </div>
           <div class="form-group mt-3">
             <label for="wareQuantity">Количество: </label>
-            <input type="text" name="ware_quantity" class="form-control" id="wareQuantity" placeholder="Введите количество">
+            <input type="number" name="quantity" class="form-control" id="wareQuantity" placeholder="Введите количество" required>
           </div>
           <div class="form-group mt-3">
             <label for="warePrice">Цена: </label>
-            <input type="text" name="phone_number" class="form-control" id="warePrice" placeholder="Введите цену">
+            <input type="number" name="price" class="form-control" id="warePrice" placeholder="Введите цену">
           </div>
           <div class="form-group mt-3">
             <label for="exampleInputEmail1">Категория: </label>
             <select class="form-select" name="category">
-              <option value="">Выберите категорию</option>
               {{#each category}}
                 {{#with this as | item |}}
                   <option value="{{item.name}}">{{item.name}}</option>
@@ -78,7 +77,6 @@
           <div class="form-group mt-3">
             <label for="exampleInputEmail1">Производитель: </label>
             <select class="form-select" name="man">
-              <option value="">Выберите производителя</option>
               {{#each man}}
                 {{#with this as | item |}}
                   <option value="{{item.name}}">{{item.name}}</option>
@@ -86,7 +84,7 @@
               {{/each}}
             </select>
           </div>
-          <button type="submit" class="btn btn-primary mt-3 mb-3 me-3">Редактировать</button>
+          <button type="submit" class="btn btn-primary mt-3 mb-3 me-3">Создать</button>
           <a href="/admin/ware"><button type="button" class="btn btn-primary mt-3 mb-3 me-3">Отмена</button></a>
         </form>
 

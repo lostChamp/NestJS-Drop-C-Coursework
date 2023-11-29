@@ -14,6 +14,16 @@ export class ManufacturerRepository {
     return man;
   }
 
+  async getManByValue(value: string|number) {
+    const man = await this.ManModel.findOne({
+      where: {
+        name: value.toString()
+      }
+    })
+
+    return man;
+  }
+
   async getManById(id: number) {
     const man = await this.ManModel.findOne({
       where: {

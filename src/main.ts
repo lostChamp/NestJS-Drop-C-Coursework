@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as process from 'process';
 import { Logger } from '@nestjs/common';
-import { NestExpressApplication } from '@nestjs/platform-express';
+import { MulterModule, NestExpressApplication } from "@nestjs/platform-express";
 import * as expressHbs from 'express-handlebars';
 import {join} from 'path';
 import * as cookieParser from "cookie-parser";
@@ -20,7 +20,6 @@ async function bootstrap() {
     defaultLayout: "layout",
     extname: "hbs",
   }));
-
 
   const PORT = process.env.PORT || 8000;
   await app.listen(PORT);
