@@ -7,16 +7,29 @@ import { EditUserDto } from "./dto/edit.user.dto";
 import { AuthService } from "../auth/auth.service";
 import { EditPasswordDto } from "./dto/edit.password.dto";
 import { Roles } from "../auth/roles-auth.decorator";
+import { CreateUserDto } from "./dto/create.user.dto";
+import { RoleService } from "../role/role.service";
+import * as bcrypt from "bcryptjs";
 
 
 @Controller('/user')
 export class UserController {
 
   constructor(private readonly userService: UserService,
+              private readonly roleService: RoleService,
               private readonly jwtService: JwtService,
               @Inject(forwardRef(() => AuthService))
               private readonly authService: AuthService
               ) {}
+
+  @Roles("ADMIN")
+  @Post("/create/admin")
+  async createUserAdminPanel(@Res() res: Response, @Req() req: Request, @Body() info: CreateUserDto) {
+    info["password"] = await bcrypt.hash(info["password"], 5);
+    info["role"] = await this.roleService.getRoleByValue(info["role"]);
+    const user = await this.userService.createUser(info, {role: info["role"]});
+    return res.redirect(`${process.env.BASE_URL}/admin`);
+  }
 
   @Get("/delete/account/:id")
   async deleteUser(@Param("id", ParseIntPipe) id: number,

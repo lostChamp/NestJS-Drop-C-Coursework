@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { ManufacturerEntity } from "../entity/manufacturer.entity";
+import { CreateManDto } from "../dto/create.man.dto";
 
 @Injectable()
 export class ManufacturerRepository {
@@ -20,5 +21,35 @@ export class ManufacturerRepository {
       }
     })
     return man;
+  }
+
+  async createMan(info: CreateManDto) {
+    const newMan = await this.ManModel.create({
+      ...info
+    });
+    await this.ManModel.save(newMan);
+    return newMan;
+  }
+
+  async updateMan(id: number, info: CreateManDto) {
+    const man = await this.ManModel.findOne({
+      where: {
+        id: id
+      }
+    })
+
+    man.name = info.name;
+
+    await this.ManModel.save(man);
+  }
+
+  async deleteMan(id: number) {
+    const man = await this.ManModel.findOne({
+      where: {
+        id: id
+      }
+    });
+
+    await this.ManModel.remove(man);
   }
 }

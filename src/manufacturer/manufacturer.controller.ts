@@ -1,4 +1,43 @@
-import { Controller } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Req, Res, UseGuards } from "@nestjs/common";
+import { ManufacturerService } from "./manufacturer.service";
+import { Roles } from "../auth/roles-auth.decorator";
+import { JwtAuthGuard } from "../auth/jwt-auth-guard";
+import { RolesGuard } from "../auth/roles.guard";
+import { Request, Response } from "express";
+import { CreateManDto } from "./dto/create.man.dto";
+import * as process from "process";
 
-@Controller('manufacturer')
-export class ManufacturerController {}
+@Controller('man')
+export class ManufacturerController {
+
+  constructor(private readonly manService: ManufacturerService) {}
+
+  @Roles("ADMIN")
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Post("/add/admin")
+  async createMan(@Res() res: Response,
+                  @Body() info: CreateManDto) {
+    const man = await this.manService.createMan(info);
+    return res.redirect(`${process.env.BASE_URL}/admin/mans`);
+  }
+
+  @Roles("ADMIN")
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Post("edit/:id/admin")
+  async updateMan(@Res() res: Response,
+                  @Body() info: CreateManDto,
+                  @Param("id", ParseIntPipe) id: number) {
+    const man = await this.manService.updateMan(id, info);
+    return res.redirect(`${process.env.BASE_URL}/admin/mans`);
+  }
+
+  @Roles("ADMIN")
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get("/delete/:id")
+  async deleteMan(@Res() res: Response,
+                  @Param("id", ParseIntPipe) id: number) {
+    const man = await this.manService.deleteMan(id);
+    return res.redirect(`${process.env.BASE_URL}/admin/mans`);
+  }
+
+}

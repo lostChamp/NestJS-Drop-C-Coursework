@@ -11,4 +11,9 @@ export class RoleRepository {
     const role = await this.RoleModel.findOneBy({value: value});
     return role
   }
+
+  async getAllRoles() {
+    const roles = await this.RoleModel.find();
+    return roles;
+  }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ServiceRepository } from "./repository/service.repository";
+import { CreateServiceDto } from "./dto/create.service.dto";
 
 @Injectable()
 export class ServiceService {
@@ -14,6 +15,20 @@ export class ServiceService {
   async getServiceById(id: number) {
     const service = await this.serviceRepository.getServiceById(id);
     return service;
+  }
+
+  async createService(info: CreateServiceDto) {
+    const service = await this.serviceRepository.createService(info);
+    return service;
+  }
+
+  async updateService(id: number, info: CreateServiceDto) {
+    const service = await this.serviceRepository.updateService(id, info);
+    return service
+  }
+
+  async deleteService(id: number) {
+    await this.serviceRepository.deleteService(id);
   }
 
 }

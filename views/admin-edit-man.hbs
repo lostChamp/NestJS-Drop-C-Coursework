@@ -43,10 +43,10 @@
         </div>
       </div>
       <div class="mt-5 mx-3">
-        <form method="post" action="/man/edit/{{man.id}}/admin">
+        <form method="post" class="from-container" action="/man/edit/{{man.id}}/admin">
           <div class="form-group mt-3">
             <label for="manMan">Производитель: </label>
-            <input type="text" name="man_name" class="form-control" id="manMan" value="{{man.name}}" placeholder="Введите производителя">
+            <input type="text" name="name" class="form-control" id="manMan" value="{{man.name}}" placeholder="Введите производителя" required>
           </div>
           <button type="submit" class="btn btn-primary mt-3 mb-3 me-3">Редактировать</button>
           <a href="/man/delete/{{man.id}}"><button type="button" class="me-3 btn btn-primary mt-3 mb-3">Удалить</button></a>

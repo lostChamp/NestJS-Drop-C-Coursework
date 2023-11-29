@@ -45,7 +45,7 @@
       <div class="mt-5 mx-3">
         <p>Пользователь: {{order.user.email}}</p>
         <p>Товар/услуга: {{order.ware.item}}{{order.service.name}}</p>
-        <form method="post" action="/order/edit/{{order.id}}/admin">
+        <form method="post" class="from-container" action="/order/edit/{{order.id}}/admin">
           <div class="form-group mt-3">
             <label for="descriptionOrder">Описание: </label>
             <input type="text" name="order_description" class="form-control" id="descriptionOrder" value="{{order.description}}" placeholder="Введите описание">

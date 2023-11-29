@@ -10,6 +10,7 @@ import { OrderService } from "../order/order.service";
 import { ServiceService } from "../service/service.service";
 import { ManufacturerService } from "../manufacturer/manufacturer.service";
 import { CategoryService } from "../category/category.service";
+import { RoleService } from "../role/role.service";
 
 @Roles("ADMIN")
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -22,7 +23,8 @@ export class AdminController {
               private readonly orderService: OrderService,
               private readonly serviceService: ServiceService,
               private readonly manService: ManufacturerService,
-              private readonly categoryService: CategoryService) {}
+              private readonly categoryService: CategoryService,
+              private readonly roleService: RoleService) {}
 
   @Get("")
   async adminPage(@Res() res: Response, @Req() req: Request) {
@@ -116,9 +118,11 @@ export class AdminController {
   @Get("/user/create")
   async createUserForm(@Res() res: Response, @Req() req: Request) {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
+    const roles = await this.roleService.getAllRoles();
     return res.render("admin-add-user", {
       auth: token,
       role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+      roles: roles
     })
   }
 
@@ -157,6 +161,15 @@ export class AdminController {
   async createCategoryForm(@Res() res: Response, @Req() req: Request) {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
     return res.render("admin-add-category", {
+      auth: token,
+      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+    })
+  }
+
+  @Get("/order/create")
+  async createOrderForm(@Res() res: Response, @Req() req: Request) {
+    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
+    return res.render("admin-add-order", {
       auth: token,
       role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
     })

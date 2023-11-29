@@ -8,6 +8,7 @@ import { OrderModule } from "../order/order.module";
 import { ServiceModule } from "../service/service.module";
 import { ManufacturerModule } from "../manufacturer/manufacturer.module";
 import { CategoryModule } from "../category/category.module";
+import { RoleModule } from "../role/role.module";
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { CategoryModule } from "../category/category.module";
     OrderModule,
     ServiceModule,
     ManufacturerModule,
-    CategoryModule
+    CategoryModule,
+    RoleModule
   ],
   providers: [AdminService],
   controllers: [

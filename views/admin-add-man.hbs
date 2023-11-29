@@ -43,12 +43,12 @@
         </div>
       </div>
       <div class="mt-5 mx-3">
-        <form method="post" action="/man/add/admin">
+        <form method="post" class="from-container" action="/man/add/admin">
           <div class="form-group mt-3">
             <label for="manMan">Производитель: </label>
-            <input type="text" name="man_name" class="form-control" id="manMan" placeholder="Введите производителя">
+            <input type="text" name="name" class="form-control" id="manMan" placeholder="Введите производителя" required>
           </div>
-          <button type="submit" class="btn btn-primary mt-3 mb-3 me-3">Редактировать</button>
+          <button type="submit" class="btn btn-primary mt-3 mb-3 me-3">Создать</button>
           <a href="/admin/mans"><button type="button" class="btn btn-primary mt-3 mb-3 me-3">Отмена</button></a>
         </form>
       </div>

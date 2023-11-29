@@ -43,12 +43,12 @@
         </div>
       </div>
       <div class="mt-5 mx-3">
-        <form method="post" action="/category/edit/{{category.id}}/admin">
+        <form method="post" class="from-container" action="/category/edit/{{category.id}}/admin">
           <div class="form-group mt-3">
             <label for="categoryCategory">Категория:</label>
-            <input type="text" name="category_name" class="form-control" id="categoryCategory" value="{{category.name}}" placeholder="Введите категорию">
+            <input type="text" name="name" class="form-control" id="categoryCategory" value="{{category.name}}" placeholder="Введите категорию" required>
           </div>
-          <button type="submit" class="btn btn-primary mt-3 mb-3 me-3">Редактировать:</button>
+          <button type="submit" class="btn btn-primary mt-3 mb-3 me-3">Редактировать</button>
           <a href="/category/delete/{{category.id}}"><button type="button" class="btn btn-primary mt-3 mb-3 me-3">Удалить</button></a>
           <a href="/admin/category"><button type="button" class="btn btn-primary mt-3 mb-3 me-3">Отмена</button></a>
         </form>

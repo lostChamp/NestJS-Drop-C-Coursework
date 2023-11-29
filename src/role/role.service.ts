@@ -8,4 +8,9 @@ export class RoleService {
   async getRoleByValue(value: string) {
     return this.roleRepository.getRoleByValue(value);
   }
+
+  async getAllRoles() {
+    const roles = await this.roleRepository.getAllRoles();
+    return roles;
+  }
 }

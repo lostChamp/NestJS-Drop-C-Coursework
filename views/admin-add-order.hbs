@@ -43,22 +43,27 @@
         </div>
       </div>
       <div class="mt-5 mx-3">
-        <form method="post" action="/order/edit/{{order.id}}/admin">
-          <div class="form-group mt-3">
-            <label for="descriptionOrder">Описание: </label>
-            <input type="text" name="order_description" class="form-control" id="descriptionOrder" placeholder="Введите описание">
-          </div>
-          <div class="form-group mt-3">
-            <label for="descriptionOrder">Описание: </label>
-            <input type="text" name="order_description" class="form-control" id="descriptionOrder" placeholder="Введите описание">
-          </div>
+        <form method="post" class="from-container" action="/order/add/admin">
           <div class="form-group mt-3">
             <label for="descriptionOrder">Описание: </label>
             <input type="text" name="order_description" class="form-control" id="descriptionOrder" placeholder="Введите описание">
           </div>
           <div class="form-group mt-3">
             <label for="statusOrder">Статус: </label>
-            <input type="text" name="order_status" class="form-control" id="statusOrder" value="{{order.status}}" placeholder="Введите статус">
+            <input type="text" name="order_status" class="form-control" id="statusOrder" placeholder="Введите статус">
+          </div>
+          <div class="form-group mt-3">
+            <label for="descriptionOrder">Почта пользователя: </label>
+            <input type="text" name="order_useremail" class="form-control" id="descriptionOrder" placeholder="Ввведите почту пользователя">
+          </div>
+          <div class="form-group mt-3">
+            <label for="itemOrder">Название товара: </label>
+            <input type="text" name="order_item" class="form-control" id="itemOrder" placeholder="Название товара">
+          </div>
+          <p class="mt-3">или</p>
+          <div class="form-group mt-3">
+            <label for="serviceOrder">Название услуги: </label>
+            <input type="text" name="order_service" class="form-control" id="serviceOrder" placeholder="Название услуги">
           </div>
           <button type="submit" class="btn btn-primary mt-3 mb-3 me-3">Создать</button>
           <a href="/admin/orders"><button type="button" class="btn btn-primary mt-3 mb-3 me-3">Отмена</button></a>

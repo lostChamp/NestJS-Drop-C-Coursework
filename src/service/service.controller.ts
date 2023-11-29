@@ -6,6 +6,9 @@ import { OrderService } from "../order/order.service";
 import { ServiceOrderDto } from "./dto/service-order.dto";
 import * as process from "process";
 import { JwtAuthGuard } from "../auth/jwt-auth-guard";
+import { RolesGuard } from "../auth/roles.guard";
+import { Roles } from "../auth/roles-auth.decorator";
+import { CreateServiceDto } from "./dto/create.service.dto";
 
 @Controller('services')
 export class ServiceController {
@@ -23,6 +26,34 @@ export class ServiceController {
       role: token && token.roles === "ADMIN" ? "ADMIN" : null,
       service: services
     });
+  }
+
+  @Roles("ADMIN")
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Post("/add/admin")
+  async createService(@Res() res: Response,
+                      @Body() info: CreateServiceDto) {
+    const service = await this.serviceService.createService(info);
+    return res.redirect(`${process.env.BASE_URL}/admin/service`);
+  }
+
+  @Roles("ADMIN")
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Post("/edit/:id/admin")
+  async updateService(@Res() res: Response,
+                      @Body() info: CreateServiceDto,
+                      @Param("id", ParseIntPipe) id: number) {
+    const service = await this.serviceService.updateService(id, info);
+    return res.redirect(`${process.env.BASE_URL}/admin/service`);
+  }
+
+  @Roles("ADMIN")
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get("/delete/:id")
+  async deleteService(@Res() res: Response,
+                      @Param("id", ParseIntPipe) id: number) {
+    const service = await this.serviceService.deleteService(id);
+    return res.redirect(`${process.env.BASE_URL}/admin/service`);
   }
 
   @Get("/:id")

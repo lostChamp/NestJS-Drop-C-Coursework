@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ManufacturerEntity } from "./entity/manufacturer.entity";
 import { ManufacturerRepository } from "./repository/man.repository";
+import { CreateManDto } from "./dto/create.man.dto";
 
 @Injectable()
 export class ManufacturerService {
@@ -15,6 +16,20 @@ export class ManufacturerService {
   async getManById(id: number) {
     const man = await this.manRepository.getManById(id);
     return man;
+  }
+
+  async createMan(info: CreateManDto) {
+    const man = this.manRepository.createMan(info);
+    return man;
+  }
+
+  async updateMan(id: number, info: CreateManDto) {
+    const man = await this.manRepository.updateMan(id, info);
+    return man;
+  }
+
+  async deleteMan(id: number) {
+    await this.manRepository.deleteMan(id);
   }
 
 }
