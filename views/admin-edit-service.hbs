@@ -46,16 +46,16 @@
         <form method="post" action="/service/edit/{{service.id}}/admin">
           <div class="form-group mt-3">
             <label for="serviceService" class="mt-3">Услуга</label>
-            <input type="text" name="service_name" class="form-control" id="serviceService" value="{{service.name}}" placeholder="Введите категорию">
+            <input type="text" name="service_name" class="form-control" id="serviceService" value="{{service.name}}" placeholder="Введите название услуги">
             <label for="serviceDescription" class="mt-3">Описание</label>
-            <input type="text" name="service_description" class="form-control" id="serviceDescription" value="{{service.description}}" placeholder="Введите категорию">
+            <input type="text" name="service_description" class="form-control" id="serviceDescription" value="{{service.description}}" placeholder="Введите описание">
             <label for="servicePrice" class="mt-3">Цена</label>
-            <input type="text" name="service_price" class="form-control" id="servicePrice" value="{{service.price}}" placeholder="Введите категорию">
+            <input type="text" name="service_price" class="form-control" id="servicePrice" value="{{service.price}}" placeholder="Введите цену">
           </div>
-          <button type="submit" class="btn btn-primary mt-3 mb-3">Редактировать</button>
+          <button type="submit" class="btn btn-primary mt-3 mb-3 me-3">Редактировать</button>
+          <a href="/service/delete/{{service.id}}"><button type="button" class="btn btn-primary mt-3 mb-3 me-3">Удалить</button></a>
+          <a href="/admin/service"><button type="button" class="btn btn-primary mt-3 mb-3 me-3">Отмена</button></a>
         </form>
-        <a href="/service/delete/{{service.id}}"><button class="d-flex btn btn-primary mt-3 mb-3">Удалить</button></a>
-        <a href="/admin/service"><button class="btn btn-primary mt-3 mb-3">Отмена</button></a>
       </div>
     </div>
   </div>

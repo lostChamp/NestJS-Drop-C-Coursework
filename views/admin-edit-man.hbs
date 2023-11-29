@@ -48,10 +48,10 @@
             <label for="manMan">Производитель: </label>
             <input type="text" name="man_name" class="form-control" id="manMan" value="{{man.name}}" placeholder="Введите производителя">
           </div>
-          <button type="submit" class="btn btn-primary mt-3 mb-3">Редактировать</button>
+          <button type="submit" class="btn btn-primary mt-3 mb-3 me-3">Редактировать</button>
+          <a href="/man/delete/{{man.id}}"><button type="button" class="me-3 btn btn-primary mt-3 mb-3">Удалить</button></a>
+          <a href="/admin/mans"><button type="button" class="btn btn-primary mt-3 mb-3 me-3">Отмена</button></a>
         </form>
-        <a href="/man/delete/{{man.id}}"><button class="d-flex btn btn-primary mt-3 mb-3">Удалить</button></a>
-        <a href="/admin/mans"><button class="btn btn-primary mt-3 mb-3">Отмена</button></a>
       </div>
     </div>
   </div>

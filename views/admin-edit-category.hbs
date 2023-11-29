@@ -48,10 +48,10 @@
             <label for="categoryCategory">Категория:</label>
             <input type="text" name="category_name" class="form-control" id="categoryCategory" value="{{category.name}}" placeholder="Введите категорию">
           </div>
-          <button type="submit" class="btn btn-primary mt-3 mb-3">Редактировать:</button>
+          <button type="submit" class="btn btn-primary mt-3 mb-3 me-3">Редактировать:</button>
+          <a href="/category/delete/{{category.id}}"><button type="button" class="btn btn-primary mt-3 mb-3 me-3">Удалить</button></a>
+          <a href="/admin/category"><button type="button" class="btn btn-primary mt-3 mb-3 me-3">Отмена</button></a>
         </form>
-        <a href="/category/delete/{{category.id}}"><button class="d-flex btn btn-primary mt-3 mb-3">Удалить</button></a>
-        <a href="/admin/category"><button class="btn btn-primary mt-3 mb-3">Отмена</button></a>
       </div>
     </div>
   </div>

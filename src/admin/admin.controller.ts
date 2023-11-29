@@ -11,6 +11,8 @@ import { ServiceService } from "../service/service.service";
 import { ManufacturerService } from "../manufacturer/manufacturer.service";
 import { CategoryService } from "../category/category.service";
 
+@Roles("ADMIN")
+@UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('admin')
 export class AdminController {
 
@@ -22,8 +24,6 @@ export class AdminController {
               private readonly manService: ManufacturerService,
               private readonly categoryService: CategoryService) {}
 
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get("")
   async adminPage(@Res() res: Response, @Req() req: Request) {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
@@ -35,8 +35,6 @@ export class AdminController {
     }
   }
 
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get("/users")
   async adminUsers(@Res() res: Response, @Req() req: Request) {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
@@ -50,8 +48,6 @@ export class AdminController {
     }
   }
 
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get("/ware")
   async adminWare(@Res() res: Response, @Req() req: Request) {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
@@ -65,8 +61,6 @@ export class AdminController {
     }
   }
 
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get("/orders")
   async adminOrders (@Res() res: Response, @Req() req: Request) {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
@@ -80,8 +74,6 @@ export class AdminController {
     }
   }
 
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get("/service")
   async adminService (@Res() res: Response, @Req() req: Request) {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
@@ -95,8 +87,6 @@ export class AdminController {
     }
   }
 
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get("/mans")
   async adminMan (@Res() res: Response, @Req() req: Request) {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
@@ -110,8 +100,6 @@ export class AdminController {
     }
   }
 
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get("/category")
   async adminCategory (@Res() res: Response, @Req() req: Request) {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
@@ -125,8 +113,55 @@ export class AdminController {
     }
   }
 
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get("/user/create")
+  async createUserForm(@Res() res: Response, @Req() req: Request) {
+    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
+    return res.render("admin-add-user", {
+      auth: token,
+      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+    })
+  }
+
+  @Get("/ware/create")
+  async createWareForm(@Res() res: Response, @Req() req: Request) {
+    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
+    const mans = await this.manService.getAllMans();
+    const categories = await this.categoryService.getAllCategories();
+    return res.render("admin-add-ware", {
+      auth: token,
+      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+      man: mans,
+      category: categories,
+    })
+  }
+
+  @Get("/service/create")
+  async createServiceForm(@Res() res: Response, @Req() req: Request) {
+    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
+    return res.render("admin-add-service", {
+      auth: token,
+      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+    })
+  }
+
+  @Get("/man/create")
+  async createManForm(@Res() res: Response, @Req() req: Request) {
+    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
+    return res.render("admin-add-man", {
+      auth: token,
+      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+    })
+  }
+
+  @Get("/category/create")
+  async createCategoryForm(@Res() res: Response, @Req() req: Request) {
+    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
+    return res.render("admin-add-category", {
+      auth: token,
+      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+    })
+  }
+
   @Get("/user/:id")
   async editUserForm(@Res() res: Response, @Req() req: Request,
                      @Param("id", ParseIntPipe) id: number) {
@@ -140,14 +175,11 @@ export class AdminController {
     })
   }
 
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get("/category/:id")
   async editCategoryForm(@Res() res: Response, @Req() req: Request,
                          @Param("id", ParseIntPipe) id: number) {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
     const category = await this.categoryService.getCategoryById(id);
-    console.log(category);
     return res.render("admin-edit-category", {
       auth: token,
       role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
@@ -155,8 +187,6 @@ export class AdminController {
     })
   }
 
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get("/service/:id")
   async editServiceForm(@Res() res: Response, @Req() req: Request,
                          @Param("id", ParseIntPipe) id: number) {
@@ -169,8 +199,6 @@ export class AdminController {
     })
   }
 
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get("/man/:id")
   async editManForm(@Res() res: Response, @Req() req: Request,
                         @Param("id", ParseIntPipe) id: number) {
@@ -183,8 +211,6 @@ export class AdminController {
     })
   }
 
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get("/ware/:id")
   async editWareForm(@Res() res: Response, @Req() req: Request,
                     @Param("id", ParseIntPipe) id: number) {
@@ -201,14 +227,11 @@ export class AdminController {
     })
   }
 
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get("/order/:id")
   async editOrderForm(@Res() res: Response, @Req() req: Request,
                      @Param("id", ParseIntPipe) id: number) {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
     const order = await this.orderService.getOrderById(id);
-    console.log(order);
     return res.render("admin-edit-order", {
       auth: token,
       role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
