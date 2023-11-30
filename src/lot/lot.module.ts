@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from "@nestjs/common";
 import { LotController } from './lot.controller';
 import { LotService } from './lot.service';
 import { WareRepository } from "./repository/ware.respository";
@@ -14,7 +14,7 @@ import { ManufacturerModule } from "../manufacturer/manufacturer.module";
   imports: [
     TypeOrmModule.forFeature([WareEntity]),
     JwtModule,
-    OrderModule,
+    forwardRef(() => OrderModule),
     CategoryModule,
     ManufacturerModule
   ],

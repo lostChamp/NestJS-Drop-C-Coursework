@@ -14,6 +14,15 @@ export class WareRepository {
     return lots;
   }
 
+  async getWareByValue(value: string) {
+    const ware = await this.WareModel.findOne({
+      where: {
+        item: value
+      }
+    });
+    return ware;
+  }
+
   async createLot(info: CreateLotDto) {
     const category = info.category.toString();
     const man = info.man.toString();
@@ -37,19 +46,28 @@ export class WareRepository {
         id: id
       }
     });
-    let flag = false;
-    let image = "/images/noImage.jpg"
-    if(lot.image !== image) {
-      flag = true;
-      image = lot.image;
+    if(!info.image) {
+      let flag = false;
+      let image = "/images/noImage.jpg"
+      if(lot.image !== image) {
+        flag = true;
+        image = lot.image;
+      }
+      Object.assign(lot, info);
+
+      await this.WareModel.save(lot);
+      if(lot.image === "" && !flag) {
+        lot.image = "/images/noImage.jpg"
+      }else {
+        lot.image = image;
+      }
     }
+
     Object.assign(lot, info);
-    if(lot.image === "" && !flag) {
-      lot.image = "/images/noImage.jpg"
-    }else {
-      lot.image = image;
-    }
+
     await this.WareModel.save(lot);
+
+    return;
   }
 
   async deleteLot(id: number) {

@@ -24,6 +24,15 @@ export class ServiceRepository{
     return service;
   }
 
+  async getServiceByValue(value: string) {
+    const service = await this.ServiceModel.findOne({
+      where: {
+        name: value
+      }
+    });
+    return service;
+  }
+
   async createService(info: CreateServiceDto) {
     const service = await this.ServiceModel.create({
       ...info

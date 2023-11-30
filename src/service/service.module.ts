@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from "@nestjs/common";
 import { ServiceController } from './service.controller';
 import { ServiceEntity } from "./entity/service.entity";
 import { TypeOrmModule } from "@nestjs/typeorm";
@@ -11,7 +11,7 @@ import { OrderModule } from "../order/order.module";
   imports: [
     TypeOrmModule.forFeature([ServiceEntity]),
     JwtModule,
-    OrderModule
+    forwardRef(() => OrderModule)
   ],
   controllers: [ServiceController],
   providers: [ServiceService, ServiceRepository],

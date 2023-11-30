@@ -78,9 +78,28 @@ export class LotController {
 
   @Roles('ADMIN')
   @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseInterceptors(
+    FileInterceptor('image',  {
+      storage: diskStorage({
+        destination: "./public/images",
+        filename: (req, file, cb) => {
+          const fileType = file.originalname.split(".");
+          const type = fileType[fileType.length - 1];
+          const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
+          file.originalname = randomName
+          file["type"] = type;
+          cb(null, `${randomName}.${type}`)
+        }
+      })
+    })
+  )
   @Post("/edit/:id/admin")
   async updateWare(@Res() res: Response, @Body() info,
-                   @Param("id", ParseIntPipe) id: number) {
+                   @Param("id", ParseIntPipe) id: number,
+                   @UploadedFile() image: Express.Multer.File) {
+    if(image) {
+      info.image = `/images/${image.originalname}.${image["type"]}`;
+    }
     const lot = await this.lotService.updateLot(id, info);
     return res.redirect(`${process.env.BASE_URL}/admin/ware`);
   }

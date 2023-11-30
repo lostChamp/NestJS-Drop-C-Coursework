@@ -1,4 +1,16 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Req, Res, UseGuards } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  forwardRef,
+  Get,
+  Inject,
+  Param,
+  ParseIntPipe,
+  Post,
+  Req,
+  Res,
+  UseGuards
+} from "@nestjs/common";
 import { Request, Response } from "express";
 import { JwtService } from "@nestjs/jwt";
 import { ServiceService } from "./service.service";
@@ -15,6 +27,7 @@ export class ServiceController {
 
   constructor(private readonly jwtService: JwtService,
               private readonly serviceService: ServiceService,
+              @Inject(forwardRef(() => OrderService))
               private readonly orderService: OrderService) {}
 
   @Get("")

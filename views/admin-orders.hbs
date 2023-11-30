@@ -62,10 +62,10 @@
           {{#each order}}
             {{#with this as | item |}}
               <tr>
-                <th scope="row">{{item.id}}</th>
+                <th scope="row"><a href="/admin/order/{{item.id}}">{{item.id}}</a></th>
                 <td>{{item.description}}</td>
                 <td>{{item.status}}</td>
-                <td><a href="/admin/order/{{item.id}}">{{item.user.email}}</a></td>
+                <td>{{item.user.email}}</td>
                 <td>{{item.ware.item}}</td>
                 <td>{{item.service.name}}</td>
               </tr>

@@ -16,6 +16,11 @@ export class LotService {
     return wares;
   }
 
+  async getWareByValue(value: string) {
+    const ware = await this.wareRepository.getWareByValue(value);
+    return ware;
+  }
+
   async createLot(info: CreateLotDto) {
     const lot = await this.wareRepository.createLot(info);
     return lot;
