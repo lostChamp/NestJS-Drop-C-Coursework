@@ -31,10 +31,16 @@ import { PagesController } from './pages/pages.controller';
 import { PagesModule } from './pages/pages.module';
 import { AdminController } from './admin/admin.controller';
 import { AdminModule } from './admin/admin.module';
+import { MulterModule } from "@nestjs/platform-express";
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    MulterModule.registerAsync({
+      useFactory: () => ({
+        dest: './public/images',
+      }),
+    }),
     TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',

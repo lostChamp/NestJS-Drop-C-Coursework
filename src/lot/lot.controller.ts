@@ -22,6 +22,7 @@ import { Roles } from "../auth/roles-auth.decorator";
 import { CategoryService } from "../category/category.service";
 import { ManufacturerService } from "../manufacturer/manufacturer.service";
 import { CreateLotDto } from "./dto/create.lot.dto";
+import { diskStorage } from "multer";
 
 @Controller('lots')
 export class LotController {
@@ -45,19 +46,34 @@ export class LotController {
   @Roles('ADMIN')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Post("/add/admin")
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(
+    FileInterceptor('image',  {
+      storage: diskStorage({
+        destination: "./public/images",
+        filename: (req, file, cb) => {
+          const fileType = file.originalname.split(".");
+          const type = fileType[fileType.length - 1];
+          const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
+          file.originalname = randomName
+          file["type"] = type;
+          cb(null, `${randomName}.${type}`)
+        }
+      })
+    })
+  )
   async createLot(@UploadedFile() image: Express.Multer.File, @Body() info: CreateLotDto,
                   @Res() res: Response) {
     if(image === undefined) {
       info.image = "/images/noImage.jpg";
+    }else {
+      info.image = `/images/${image.originalname}.${image["type"]}`;
     }
-    console.log(image);
-    // const category = await this.categoryService.getCategoryByValue(info.category);
-    // const man = await this.manService.getManByValue(info.man);
-    // info.category = category.id;
-    // info.man = man.id
-    // const lot = await this.lotService.createLot(info);
-    // return res.redirect(`${process.env.BASE_URL}/admin/ware`);
+    const category = await this.categoryService.getCategoryByValue(info.category);
+    const man = await this.manService.getManByValue(info.man);
+    info.category = category.id;
+    info.man = man.id
+    const lot = await this.lotService.createLot(info);
+    return res.redirect(`${process.env.BASE_URL}/admin/ware`);
   }
 
   @Roles('ADMIN')
