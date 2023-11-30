@@ -29,7 +29,6 @@ export class OrderController {
       info.ware = ware.id;
       info.service = null;
     }
-    console.log(info);
     const order = await this.orderService.createOrder(info);
     return res.redirect(`${process.env.BASE_URL}/admin/orders`);
   }

@@ -169,9 +169,13 @@ export class AdminController {
   @Get("/order/create")
   async createOrderForm(@Res() res: Response, @Req() req: Request) {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
+    const wares = await this.wareService.getAllWares();
+    const services = await this.serviceService.getAllServices();
     return res.render("admin-add-order", {
       auth: token,
       role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+      service: services,
+      ware: wares
     })
   }
 

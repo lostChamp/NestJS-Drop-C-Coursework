@@ -56,14 +56,27 @@
             <label for="descriptionOrder">Почта пользователя: </label>
             <input type="text" name="useremail" class="form-control" id="descriptionOrder" placeholder="Ввведите почту пользователя">
           </div>
-          <div class="form-group mt-3">
-            <label for="itemOrder">Название товара: </label>
-            <input type="text" name="item" class="form-control" id="itemOrder" placeholder="Название товара">
+          <div class="form-group mt-3 addWare">
+            <label for="exampleInputEmail1">Продукт: </label>
+            <select class="form-select" id="selectAddWare" name="ware">
+              <option value=""></option>
+              {{#each ware}}
+                {{#with this as | item |}}
+                  <option value="{{item.item}}">{{item.item}}</option>
+                {{/with}}
+              {{/each}}
+            </select>
           </div>
-          <p class="mt-3">или</p>
-          <div class="form-group mt-3">
-            <label for="serviceOrder">Название услуги: </label>
-            <input type="text" name="service" class="form-control" id="serviceOrder" placeholder="Название услуги">
+          <div class="form-group mt-3 addService">
+            <label for="exampleInputEmail1">Услуга: </label>
+            <select class="form-select" id="selectAddService" name="service">
+              <option value=""></option>
+              {{#each service}}
+                {{#with this as | item |}}
+                  <option value="{{item.name}}">{{item.name}}</option>
+                {{/with}}
+              {{/each}}
+            </select>
           </div>
           <button type="submit" class="btn btn-primary mt-3 mb-3 me-3">Создать</button>
           <a href="/admin/orders"><button type="button" class="btn btn-primary mt-3 mb-3 me-3">Отмена</button></a>
