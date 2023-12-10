@@ -12,7 +12,7 @@ import { ManufacturerService } from "../manufacturer/manufacturer.service";
 import { CategoryService } from "../category/category.service";
 import { RoleService } from "../role/role.service";
 
-@Roles("ADMIN")
+@Roles("ADMIN", "MASTER")
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('admin')
 export class AdminController {
@@ -30,10 +30,21 @@ export class AdminController {
   async adminPage(@Res() res: Response, @Req() req: Request) {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
     if(token) {
-      return res.render("admin-main", {
-        auth: token,
-        role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
-      });
+      if(token.roles && token.roles === "MASTER") {
+        const order = await this.orderService.getAllOrders();
+        return res.render("admin-main-master", {
+          auth: token,
+          order: order,
+          role: (token.roles === "ADMIN" || token.roles === "MASTER") && token.roles ? "ADMIN" : null,
+        });
+      }
+      if(token.roles && token.roles === "ADMIN") {
+        return res.render("admin-main", {
+          auth: token,
+          role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+        });
+      }
+
     }
   }
 
@@ -70,7 +81,7 @@ export class AdminController {
     if(token) {
       return res.render("admin-orders", {
         auth: token,
-        role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+        role: (token.roles === "ADMIN" || token.roles === "MASTER") && token.roles ? "ADMIN" : null,
         order: order,
       });
     }
@@ -179,71 +190,6 @@ export class AdminController {
     })
   }
 
-  @Get("/user/:id")
-  async editUserForm(@Res() res: Response, @Req() req: Request,
-                     @Param("id", ParseIntPipe) id: number) {
-
-    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
-    const user = await this.userService.getUserById(id);
-    return res.render("admin-edit-user", {
-      auth: token,
-      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
-      user: user
-    })
-  }
-
-  @Get("/category/:id")
-  async editCategoryForm(@Res() res: Response, @Req() req: Request,
-                         @Param("id", ParseIntPipe) id: number) {
-    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
-    const category = await this.categoryService.getCategoryById(id);
-    return res.render("admin-edit-category", {
-      auth: token,
-      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
-      category: category,
-    })
-  }
-
-  @Get("/service/:id")
-  async editServiceForm(@Res() res: Response, @Req() req: Request,
-                         @Param("id", ParseIntPipe) id: number) {
-    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
-    const service = await this.serviceService.getServiceById(id);
-    return res.render("admin-edit-service", {
-      auth: token,
-      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
-      service: service,
-    })
-  }
-
-  @Get("/man/:id")
-  async editManForm(@Res() res: Response, @Req() req: Request,
-                        @Param("id", ParseIntPipe) id: number) {
-    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
-    const man = await this.manService.getManById(id);
-    return res.render("admin-edit-man", {
-      auth: token,
-      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
-      man: man,
-    })
-  }
-
-  @Get("/ware/:id")
-  async editWareForm(@Res() res: Response, @Req() req: Request,
-                    @Param("id", ParseIntPipe) id: number) {
-    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
-    const ware = await this.wareService.getLotById(id);
-    const mans = await this.manService.getAllMans();
-    const categories = await this.categoryService.getAllCategories();
-    return res.render("admin-edit-ware", {
-      auth: token,
-      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
-      ware: ware,
-      man: mans,
-      category: categories,
-    })
-  }
-
   @Get("/order/:id")
   async editOrderForm(@Res() res: Response, @Req() req: Request,
                      @Param("id", ParseIntPipe) id: number) {
@@ -254,6 +200,19 @@ export class AdminController {
       role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
       order: order,
     })
+  }
+  @Get("/master/order/:id")
+  async adminMasterOrders(@Res() res: Response, @Req() req: Request,
+                          @Param("id", ParseIntPipe) id: number) {
+    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
+    const order = await this.orderService.getOrderById(id);
+    if(token) {
+      return res.render("master-edit-order", {
+        auth: token,
+        role: (token.roles === "ADMIN" || token.roles === "MASTER") && token.roles ? "ADMIN" : null,
+        order: order,
+      });
+    }
   }
 
 }

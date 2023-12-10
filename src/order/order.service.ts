@@ -2,11 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { OrderRepository } from "./repository/order.repository";
 import { ServiceOrderDto } from "../service/dto/service-order.dto";
 import { CreateOrderDto } from "./dto/create.order.dto";
+import { WareRepository } from "../lot/repository/ware.respository";
+import { UserService } from "../user/user.service";
 
 @Injectable()
 export class OrderService {
 
-  constructor(private readonly orderRepository: OrderRepository) {}
+  constructor(private readonly orderRepository: OrderRepository,
+              private readonly lotRepository: WareRepository,
+              private readonly userService: UserService) {}
 
 
   async getAllOrders() {
@@ -20,7 +24,8 @@ export class OrderService {
   }
 
   async createProductOrder(id: number, info: ServiceOrderDto, user_id: number) {
-    const order = await this.orderRepository.createLotsOrder(id, info, user_id);
+    const ware = await this.lotRepository.getLotById(id)
+    const order = await this.orderRepository.createLotsOrder(ware, info, user_id);
     return order;
   }
 
@@ -35,16 +40,16 @@ export class OrderService {
   }
 
   async createOrder(info: CreateOrderDto) {
+    const user = await this.userService.getUserByEmail(info.user);
+    info.user = user;
+    await this.lotRepository.decrementArrayItemQuantity(info.ware);
     const order = await this.orderRepository.createOrder(info);
     return order;
   }
 
-  async updateOrder(id: number, info: CreateOrderDto) {
+  async updateOrder(id: number, info: object) {
     const order = await this.orderRepository.updateOrder(id, info);
     return order;
   }
 
-  async deleteOrder(id: number) {
-    await this.orderRepository.deleteOrder(id);
-  }
 }

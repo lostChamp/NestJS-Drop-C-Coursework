@@ -37,24 +37,4 @@ export class CategoryRepository {
     await this.CategoryModel.save(category);
     return category;
   }
-
-  async updateCategory(id: number, info: CreateCategoryDto) {
-    const category = await this.CategoryModel.findOne({
-      where: {
-        id: id
-      }
-    });
-    category.name = info.name;
-    await this.CategoryModel.save(category);
-  }
-
-  async deleteCategory(id: number) {
-    const category = await this.CategoryModel.findOne({
-      where: {
-        id: id
-      }
-    })
-
-    await this.CategoryModel.remove(category);
-  }
 }

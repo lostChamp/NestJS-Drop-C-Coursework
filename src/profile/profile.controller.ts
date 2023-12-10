@@ -18,7 +18,7 @@ export class ProfileController {
     if(user) {
       return res.render("profile", {
         auth: token,
-        role: token && token.roles === "ADMIN" ? "ADMIN" : null,
+        role: (token.roles === "ADMIN" || token.roles === "MASTER") ? "ADMIN" : null,
         user: user,
         selfAccount: token && id === token.id,
         orders: orders

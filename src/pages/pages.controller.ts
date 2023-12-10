@@ -28,7 +28,7 @@ export class PagesController {
         if(token) {
             return res.render("home", {
                 auth: token,
-                role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+                role: (token.roles === "ADMIN" || token.roles === "MASTER") && token.roles ? "ADMIN" : null,
             });
         }
         return res.render("home");

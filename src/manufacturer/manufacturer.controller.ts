@@ -21,23 +21,4 @@ export class ManufacturerController {
     return res.redirect(`${process.env.BASE_URL}/admin/mans`);
   }
 
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Post("edit/:id/admin")
-  async updateMan(@Res() res: Response,
-                  @Body() info: CreateManDto,
-                  @Param("id", ParseIntPipe) id: number) {
-    const man = await this.manService.updateMan(id, info);
-    return res.redirect(`${process.env.BASE_URL}/admin/mans`);
-  }
-
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Get("/delete/:id")
-  async deleteMan(@Res() res: Response,
-                  @Param("id", ParseIntPipe) id: number) {
-    const man = await this.manService.deleteMan(id);
-    return res.redirect(`${process.env.BASE_URL}/admin/mans`);
-  }
-
 }

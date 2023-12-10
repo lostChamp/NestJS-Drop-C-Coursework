@@ -31,27 +31,6 @@ export class UserController {
     return res.redirect(`${process.env.BASE_URL}/admin`);
   }
 
-  @Get("/delete/account/:id")
-  async deleteUser(@Param("id", ParseIntPipe) id: number,
-                   @Res() res: Response, @Req() req: Request) {
-    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
-    if(token.id === id) {
-      await this.userService.deleteUserById(id);
-      const cookie = req.cookies;
-      for (let prop in cookie) {
-        if (!cookie.hasOwnProperty(prop)) {
-          continue;
-        }
-        res.cookie(prop, '', {expires: new Date(0)});
-      }
-      return res.redirect(`${process.env.BASE_URL}/home`);
-    }
-    return res.render("profile-not-access", {
-      auth: token,
-      role: token && token.roles === "ADMIN" ? "ADMIN" : null,
-    });
-  }
-
   @Get("/edit/:id")
   async editProfile(@Res() res: Response, @Req() req: Request, @Param("id", ParseIntPipe) id: number) {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
@@ -59,7 +38,7 @@ export class UserController {
     if(user.id === token.id) {
       return res.render("edit-profile-data", {
         auth: token,
-        role: token && token.roles === "ADMIN" ? "ADMIN" : null,
+        role: (token.roles === "ADMIN" || token.roles === "MASTER") ? "ADMIN" : null,
         user: user
       })
     }
@@ -74,7 +53,7 @@ export class UserController {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
     return res.render("edit-password", {
       auth: token,
-      role: token && token.roles === "ADMIN" ? "ADMIN" : null,
+      role: (token.roles === "ADMIN" || token.roles === "MASTER") ? "ADMIN" : null,
       id: id
     });
   }
@@ -109,23 +88,6 @@ export class UserController {
       return res.redirect(`${process.env.BASE_URL}/profile/${user.id}`);
     }
 
-  }
-
-  @Roles("ADMIN")
-  @Post("/edit/:id/admin")
-  async adminEditUser(@Res() res: Response, @Req() req: Request,
-                      @Param("id", ParseIntPipe) id: number,
-                      @Body() newInfo: EditUserDto) {
-    await this.userService.updateUserById(id, newInfo);
-    return res.redirect(`${process.env.BASE_URL}/admin/users`);
-  }
-
-  @Roles("ADMIN")
-  @Get("/delete/:id")
-  async adminDeleteUser(@Res() res: Response, @Req() req: Request,
-                        @Param("id", ParseIntPipe) id: number,) {
-    await this.userService.deleteUserById(id);
-    return res.redirect(`${process.env.BASE_URL}/admin/users`);
   }
 
 }

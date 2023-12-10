@@ -7,15 +7,22 @@ import { OrderRepository } from "./repository/order.repository";
 import { JwtModule } from "@nestjs/jwt";
 import { LotModule } from "../lot/lot.module";
 import { ServiceModule } from "../service/service.module";
+import { WareRepository } from "../lot/repository/ware.respository";
+import { WareEntity } from "../lot/entity/ware.entity";
+import { UserModule } from "../user/user.module";
+import { UserService } from "../user/user.service";
+import { UserEntity } from "../user/entity/user.entity";
+import { UserRepository } from "../user/repository/user.repository";
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([OrderEntity]),
+    TypeOrmModule.forFeature([OrderEntity, WareEntity]),
     JwtModule,
     forwardRef(() => LotModule),
-    forwardRef(() => ServiceModule)
+    forwardRef(() => ServiceModule),
+    UserModule
   ],
-  providers: [OrderService, OrderRepository],
+  providers: [OrderService, OrderRepository, WareRepository],
   controllers: [OrderController],
   exports: [
     OrderService

@@ -28,13 +28,4 @@ export class ManufacturerService {
     return man;
   }
 
-  async updateMan(id: number, info: CreateManDto) {
-    const man = await this.manRepository.updateMan(id, info);
-    return man;
-  }
-
-  async deleteMan(id: number) {
-    await this.manRepository.deleteMan(id);
-  }
-
 }

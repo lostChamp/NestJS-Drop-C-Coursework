@@ -26,28 +26,21 @@ export class OrderController {
       info.ware = null;
     }else {
       const ware = await this.wareService.getWareByValue(info.ware);
-      info.ware = ware.id;
+      info.ware = ware;
       info.service = null;
     }
     const order = await this.orderService.createOrder(info);
     return res.redirect(`${process.env.BASE_URL}/admin/orders`);
   }
 
-  @Roles("ADMIN")
+  @Roles("ADMIN", "MASTER")
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Post("/edit/:id/admin")
-  async updateOrder(@Res() res: Response, @Body() info: CreateOrderDto,
+  async updateOrder(@Res() res: Response, @Body() info: object,
                     @Param("id", ParseIntPipe) id: number) {
     const order = await this.orderService.updateOrder(id, info);
-    return res.redirect(`${process.env.BASE_URL}/admin/orders`);
+    return res.redirect(`${process.env.BASE_URL}/admin`);
   }
 
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Get("/delete/:id")
-  async deleteOrder(@Res() res: Response, @Param("id", ParseIntPipe) id: number) {
-    const order = await this.orderService.deleteOrder(id);
-    return res.redirect(`${process.env.BASE_URL}/admin/orders`);
-  }
 
 }

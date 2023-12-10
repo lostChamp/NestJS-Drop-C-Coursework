@@ -27,11 +27,6 @@ export class UserService {
         return user;
     }
 
-    async deleteUserById(id: number) {
-        await this.userRepository.deleteUserById(id);
-        return;
-    }
-
     async updateUserById(id: number, newInfo: EditUserDto) {
         const user = await this.userRepository.getUserById(id);
         if(user.email === newInfo.email) {

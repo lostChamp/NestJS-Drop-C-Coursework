@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AdminService } from './admin.service';
 import { AdminController } from "./admin.controller";
 import { JwtModule } from "@nestjs/jwt";
 import { UserModule } from "../user/user.module";
@@ -21,7 +20,7 @@ import { RoleModule } from "../role/role.module";
     CategoryModule,
     RoleModule
   ],
-  providers: [AdminService],
+  providers: [],
   controllers: [
     AdminController
   ]

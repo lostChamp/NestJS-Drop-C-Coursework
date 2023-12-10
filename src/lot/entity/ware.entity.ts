@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { CategoryEntity } from "../../category/entity/category.entity";
 import { ManufacturerEntity } from "../../manufacturer/entity/manufacturer.entity";
 import { OrderEntity } from "../../order/entity/order.entity";
@@ -34,7 +34,4 @@ export class WareEntity {
     {onDelete: "CASCADE"})
   @JoinColumn({name: "man_id"})
   man: ManufacturerEntity;
-
-  @OneToMany(() => OrderEntity, (order) => order.ware)
-  order: OrderEntity[];
 }

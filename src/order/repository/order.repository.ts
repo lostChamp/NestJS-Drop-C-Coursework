@@ -4,6 +4,7 @@ import { Repository } from "typeorm";
 import { OrderEntity } from "../entity/order.entity";
 import { ServiceOrderDto } from "../../service/dto/service-order.dto";
 import { CreateOrderDto } from "../dto/create.order.dto";
+import { WareEntity } from "../../lot/entity/ware.entity";
 
 @Injectable()
 export class OrderRepository {
@@ -32,16 +33,14 @@ export class OrderRepository {
     return newOrder;
   }
 
-  async createLotsOrder(id: number, info: ServiceOrderDto, user_id: number) {
+  async createLotsOrder(ware: WareEntity, info: ServiceOrderDto, user_id: number) {
     const order = await this.OrderModel.create({
       description: info.description,
-      ware: {
-        id: id,
-      },
       status: "В обработке",
       user: {
         id: user_id
-      }
+      },
+      ware: [ware],
     });
     const newOrder = await this.OrderModel.save(
       order
@@ -83,7 +82,7 @@ export class OrderRepository {
       return order;
   }
 
-  async updateOrder(id: number, info: CreateOrderDto) {
+  async updateOrder(id: number, info: object) {
       const order = await this.OrderModel.findOne({
         where: {
           id: id
@@ -93,13 +92,4 @@ export class OrderRepository {
       await this.OrderModel.save(order);
   }
 
-  async deleteOrder(id: number) {
-      const order = await this.OrderModel.findOne({
-        where: {
-          id: id
-        }
-      });
-
-      await this.OrderModel.remove(order);
-  }
 }

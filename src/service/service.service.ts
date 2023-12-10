@@ -26,14 +26,4 @@ export class ServiceService {
     const service = await this.serviceRepository.createService(info);
     return service;
   }
-
-  async updateService(id: number, info: CreateServiceDto) {
-    const service = await this.serviceRepository.updateService(id, info);
-    return service
-  }
-
-  async deleteService(id: number) {
-    await this.serviceRepository.deleteService(id);
-  }
-
 }

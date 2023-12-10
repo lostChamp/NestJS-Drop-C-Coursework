@@ -43,7 +43,7 @@
         </div>
       </div>
       <div class="mt-5 mx-3">
-        <form method="post" class="from-container" action="/order/add/admin">
+        <form method="post" class="from-container" action="/order/add/admin" autocomplete="off">
           <div class="form-group mt-3">
             <label for="descriptionOrder">Описание: </label>
             <input type="text" name="description" class="form-control" id="descriptionOrder" placeholder="Введите описание">
@@ -54,18 +54,21 @@
           </div>
           <div class="form-group mt-3">
             <label for="descriptionOrder">Почта пользователя: </label>
-            <input type="text" name="useremail" class="form-control" id="descriptionOrder" placeholder="Ввведите почту пользователя">
+            <input type="text" name="user" class="form-control" id="descriptionOrder" placeholder="Ввведите почту пользователя">
           </div>
-          <div class="form-group mt-3 addWare">
-            <label for="exampleInputEmail1">Продукт: </label>
-            <select class="form-select" id="selectAddWare" name="ware">
-              <option value=""></option>
-              {{#each ware}}
-                {{#with this as | item |}}
-                  <option value="{{item.item}}">{{item.item}}</option>
-                {{/with}}
-              {{/each}}
-            </select>
+          <div class="form-group mt-3">
+            <div class="addWare">
+              <label for="exampleInputEmail1">Продукт: </label>
+              <select class="form-select" id="selectAddWare" name="ware[]">
+                <option value=""></option>
+                {{#each ware}}
+                  {{#with this as | item |}}
+                    <option value="{{item.item}}">{{item.item}}</option>
+                  {{/with}}
+                {{/each}}
+              </select>
+            </div>
+            <button type="button" class="btn btn-primary mt-3" id="add_more_product">Добавить продукт</button>
           </div>
           <div class="form-group mt-3 addService">
             <label for="exampleInputEmail1">Услуга: </label>

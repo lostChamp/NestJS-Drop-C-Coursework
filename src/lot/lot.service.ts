@@ -16,25 +16,14 @@ export class LotService {
     return wares;
   }
 
-  async getWareByValue(value: string) {
-    const ware = await this.wareRepository.getWareByValue(value);
+  async getWareByValue(values: string[]) {
+    const ware = await this.wareRepository.getWareByValue(values);
     return ware;
   }
 
   async createLot(info: CreateLotDto) {
     const lot = await this.wareRepository.createLot(info);
     return lot;
-  }
-
-  async updateLot(id: number, info: CreateLotDto) {
-    info.category = await this.categoryService.getCategoryByValue(info.category);
-    info.man = await this.manService.getManByValue(info.man);
-    const lot = await this.wareRepository.updateLot(id, info);
-    return lot;
-  }
-
-  async deleteLot(id: number) {
-    await this.wareRepository.deleteLot(id)
   }
 
   async getAllWareForUsers() {
@@ -46,4 +35,9 @@ export class LotService {
     const lot = await this.wareRepository.getLotById(id);
     return lot;
   }
+
+  async decrementItemQuantity(id: number) {
+    await this.wareRepository.decrementItemQuantity(id);
+  }
+
 }

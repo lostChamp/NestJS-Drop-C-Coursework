@@ -14,13 +14,17 @@ export class WareRepository {
     return lots;
   }
 
-  async getWareByValue(value: string) {
-    const ware = await this.WareModel.findOne({
-      where: {
-        item: value
-      }
-    });
-    return ware;
+  async getWareByValue(values: string[]) {
+    let wares = [];
+    for(let item of values) {
+      const ware = await this.WareModel.findOne({
+        where: {
+          item: item
+        }
+      });
+      wares.push(ware);
+    }
+    return wares;
   }
 
   async createLot(info: CreateLotDto) {
@@ -39,45 +43,6 @@ export class WareRepository {
     await this.WareModel.save(lot);
     return lot;
   }
-
-  async updateLot(id: number, info: CreateLotDto) {
-    const lot = await this.WareModel.findOne({
-      where: {
-        id: id
-      }
-    });
-    if(!info.image) {
-      let flag = false;
-      let image = "/images/noImage.jpg"
-      if(lot.image !== image) {
-        flag = true;
-        image = lot.image;
-      }
-      Object.assign(lot, info);
-
-      await this.WareModel.save(lot);
-      if(lot.image === "" && !flag) {
-        lot.image = "/images/noImage.jpg"
-      }else {
-        lot.image = image;
-      }
-    }
-
-    Object.assign(lot, info);
-
-    await this.WareModel.save(lot);
-
-    return;
-  }
-
-  async deleteLot(id: number) {
-    const lot = await this.WareModel.findOne({
-      where: {
-        id: id
-      }
-    });
-    await this.WareModel.remove(lot);
-  }
   async getLotById(id: number) {
     const lot = await this.WareModel.findOne({
       relations: ["man", "category"],
@@ -89,4 +54,25 @@ export class WareRepository {
     return lot;
   }
 
+  async decrementItemQuantity(id: number) {
+    const lot = await this.WareModel.findOne({
+      where: {
+        id: id,
+      }
+    });
+    lot.quantity--;
+    await this.WareModel.save(lot);
+  }
+
+  async decrementArrayItemQuantity(items: string[]) {
+    for(let item of items) {
+      const lot = await this.WareModel.findOne({
+        where: {
+          item: item["item"],
+        }
+      });
+      lot.quantity--;
+      await this.WareModel.save(lot);
+    }
+  }
 }

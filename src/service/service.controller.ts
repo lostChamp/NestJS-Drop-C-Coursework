@@ -36,7 +36,7 @@ export class ServiceController {
     const services = await this.serviceService.getAllServices();
     return res.render("service-product", {
       auth: token,
-      role: token && token.roles === "ADMIN" ? "ADMIN" : null,
+      role: token && (token.roles === "ADMIN" || token.roles === "MASTER") ? "ADMIN" : null,
       service: services
     });
   }
@@ -50,32 +50,13 @@ export class ServiceController {
     return res.redirect(`${process.env.BASE_URL}/admin/service`);
   }
 
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Post("/edit/:id/admin")
-  async updateService(@Res() res: Response,
-                      @Body() info: CreateServiceDto,
-                      @Param("id", ParseIntPipe) id: number) {
-    const service = await this.serviceService.updateService(id, info);
-    return res.redirect(`${process.env.BASE_URL}/admin/service`);
-  }
-
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Get("/delete/:id")
-  async deleteService(@Res() res: Response,
-                      @Param("id", ParseIntPipe) id: number) {
-    const service = await this.serviceService.deleteService(id);
-    return res.redirect(`${process.env.BASE_URL}/admin/service`);
-  }
-
   @Get("/:id")
   async getProductInfo(@Param("id", ParseIntPipe) id: number, @Req() req: Request, @Res() res: Response) {
     const service = await this.serviceService.getServiceById(id);
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
     return res.render("service-order", {
       auth: token,
-      role: token && token.roles === "ADMIN" ? "ADMIN" : null,
+      role: token && (token.roles === "ADMIN" || token.roles === "MASTER") ? "ADMIN" : null,
       service: service
     })
   }

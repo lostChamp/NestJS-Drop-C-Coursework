@@ -10,8 +10,17 @@
                   {{#each orders}}
                     {{#with this as | item |}}
                       <li class="list-group-item d-flex-wrap p-3">
-                        <p class="mb-0">Статус: {{item.status}}</p>
-                        <p class="mb-0">Товар/Услуга: {{item.service.name}}{{item.ware.item}}</p>
+                        <p class="mb-0"><b>Статус:</b> {{item.status}}</p>
+                        <p class="mb-0"><b>Услуга:</b> {{item.service.name}}</p>
+                        <p class="mb-0"><b>Товар(ы):</b>
+                        {{#if item.ware}}
+                          {{#each item.ware}}
+                            {{#with this as | item |}}
+                              {{item.item}}</br>
+                            {{/with}}
+                          {{/each}}
+                        {{/if}}
+                        </p>
                       </li>
                     {{/with}}
                   {{/each}}
@@ -66,7 +75,6 @@
           {{#if selfAccount}}
             <a href="/user/edit/{{user.id}}"><button type="button" class="btn btn-primary me-3">Изменить данные</button></a>
             <a href="/user/edit/password/{{user.id}}"><button type="button" class="btn btn-primary me-3">Изменить пароль</button></a>
-            <a href="/user/delete/account/{{user.id}}"><button type="button" class="btn btn-primary me-3">Удалить аккаунт</button></a>
           {{/if}}
         </div>
       </div>

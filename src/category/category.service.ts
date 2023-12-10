@@ -26,13 +26,4 @@ export class CategoryService {
     const category = await this.categoryRepository.createCategory(info);
     return category;
   }
-
-  async updateCategory(id: number, info: CreateCategoryDto) {
-    const category = await this.categoryRepository.updateCategory(id, info);
-    return category;
-  }
-
-  async deleteCategory(id: number) {
-    await this.categoryRepository.deleteCategory(id);
-  }
 }

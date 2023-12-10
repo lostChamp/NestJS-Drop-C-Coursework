@@ -49,17 +49,6 @@ export class UserRepository {
         return user;
     }
 
-    async deleteUserById(id: number) {
-        const user = await this.UserModel.findOne({
-            where: {
-                id: id
-            }
-        });
-
-        await this.UserModel.remove(user);
-        return;
-    }
-
     async updateUserById(user: UserEntity) {
         await this.UserModel.save(user);
     }

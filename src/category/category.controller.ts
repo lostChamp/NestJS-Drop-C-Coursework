@@ -20,23 +20,4 @@ export class CategoryController {
     return res.redirect(`${process.env.BASE_URL}/admin/category`);
   }
 
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Post("/edit/:id/admin")
-  async updateCategory(@Req() req: Request,@Res() res: Response,
-                       @Body() info: CreateCategoryDto,
-                       @Param("id", ParseIntPipe) id: number) {
-    const category = await this.categoryService.updateCategory(id, info);
-    return res.redirect(`${process.env.BASE_URL}/admin/category`);
-  }
-
-  @Roles("ADMIN")
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Get("/delete/:id")
-  async deleteCategory(@Req() req: Request,@Res() res: Response,
-                       @Param("id", ParseIntPipe) id: number) {
-    await this.categoryService.deleteCategory(id);
-    return res.redirect(`${process.env.BASE_URL}/admin/category`);
-  }
-
 }

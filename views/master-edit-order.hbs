@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="mt-5 mx-3">
+    <p>Пользователь: {{order.user.email}}</p>
+    <p>Товар/услуга: {{order.ware.item}}{{order.service.name}}</p>
+    <p>Описание: {{order.description}}</p>
+    <form method="post" class="from-container" action="/order/edit/{{order.id}}/admin">
+      <div class="form-group mt-3">
+        <label for="statusOrder">Статус: </label>
+        <input type="text" name="status" class="form-control" id="statusOrder" value="{{order.status}}" placeholder="Введите статус">
+      </div>
+      <button type="submit" class="btn btn-primary mt-3 mb-3 me-3">Редактировать</button>
+      <a href="/admin"><button type="button" class="btn btn-primary mt-3 mb-3 me-3">Отмена</button></a>
+    </form>
+
+  </div>
+</div>

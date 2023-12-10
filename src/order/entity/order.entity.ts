@@ -1,7 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { UserEntity } from "../../user/entity/user.entity";
 import { WareEntity } from "../../lot/entity/ware.entity";
 import { ServiceEntity } from "../../service/entity/service.entity";
+import { JoinTable } from "typeorm";
 
 
 @Entity("order")
@@ -20,10 +21,11 @@ export class OrderEntity {
   @JoinColumn({name: "user_id"})
   user: UserEntity;
 
-  @ManyToOne(() => WareEntity, (ware) => ware.order,
-    {onDelete: "CASCADE"})
-  @JoinColumn({name: "ware_id"})
-  ware: WareEntity;
+  @ManyToMany(() => WareEntity)
+  @JoinTable({
+    name: "order_ware"
+  })
+  ware: WareEntity[];
 
   @ManyToOne(() => ServiceEntity, (service) => service.order,
     {onDelete: "CASCADE"})

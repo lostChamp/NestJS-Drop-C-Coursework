@@ -41,25 +41,4 @@ export class ManufacturerRepository {
     return newMan;
   }
 
-  async updateMan(id: number, info: CreateManDto) {
-    const man = await this.ManModel.findOne({
-      where: {
-        id: id
-      }
-    })
-
-    man.name = info.name;
-
-    await this.ManModel.save(man);
-  }
-
-  async deleteMan(id: number) {
-    const man = await this.ManModel.findOne({
-      where: {
-        id: id
-      }
-    });
-
-    await this.ManModel.remove(man);
-  }
 }
