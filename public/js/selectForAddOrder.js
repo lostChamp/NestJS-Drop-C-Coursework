@@ -1,6 +1,7 @@
 let selectWare = document.getElementById("selectAddWare");
 let selectService = document.getElementById("selectAddService");
 let divSelectWare = document.querySelector(".addWare");
+let item = document.getElementById("item");
 let divSelectService = document.querySelector(".addService");
 let plusButton = document.getElementById("add_more_product");
 
@@ -25,5 +26,5 @@ selectService.addEventListener("change", () => {
 });
 
 plusButton.addEventListener("click", () => {
-  divSelectWare.innerHTML += divSelectWare.innerHTML;
+  divSelectWare.innerHTML += item.innerHTML;
 });

@@ -44,12 +44,28 @@
       </div>
       <div class="mt-5 mx-3">
         <p>Пользователь: {{order.user.email}}</p>
-        <p>Товар/услуга: {{order.ware.item}}{{order.service.name}}</p>
+        <p>Услуга: {{order.service.name}}</p>
+        <p>Товар:
+          {{#if order.ware}}
+            {{#each order.ware}}
+              {{#with this as | item |}}
+                {{item.item}}</br>
+              {{/with}}
+            {{/each}}
+          {{/if}}
+        </p>
         <p>Описание: {{order.description}}</p>
         <form method="post" class="from-container" action="/order/edit/{{order.id}}/admin">
           <div class="form-group mt-3">
             <label for="statusOrder">Статус: </label>
-            <input type="text" name="status" class="form-control" id="statusOrder" value="{{order.status}}" placeholder="Введите статус">
+            <label for="statusOrder">Статус: </label>
+            <select class="form-select" name="status">
+              <option value="В обработке" selected>В обработке</option>
+              <option value="Обработан">Обработан</option>
+              <option value="Исполняется">Исполняется</option>
+              <option value="Выполнен">Выполнен</option>
+              <option value="Доставка">Доставка</option>
+            </select>
           </div>
           <button type="submit" class="btn btn-primary mt-3 mb-3 me-3">Редактировать</button>
           <a href="/admin/orders"><button type="button" class="btn btn-primary mt-3 mb-3 me-3">Отмена</button></a>

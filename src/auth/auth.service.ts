@@ -20,7 +20,7 @@ export class AuthService {
 
     async registration(userDto: CreateUserDto) {
         const candidate = await this.userService.getUserByEmail(userDto.email);
-        const role = await this.roleService.getRoleByValue("ADMIN");
+        const role = await this.roleService.getRoleByValue("USER");
         if(candidate) {
             throw new HttpException("Пользователь с таким mail существует", HttpStatus.BAD_REQUEST);
         }

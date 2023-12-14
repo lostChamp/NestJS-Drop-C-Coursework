@@ -8,27 +8,27 @@
 
       <div class="form-group my-3">
         <label for="exampleInputEmail">Почтовый адрес</label>
-        <input type="email" name="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="example@gmail.com">
+        <input type="email" name="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="example@gmail.com" required>
       </div>
 
       <div class="form-group my-3">
         <label for="exampleInputFIO">ФИО</label>
-        <input type="text" name="full_name" class="form-control" id="exampleInputFIO" placeholder="Иванов Иван Иванович">
+        <input type="text" name="full_name" class="form-control" id="exampleInputFIO" placeholder="Иванов Иван Иванович" required>
       </div>
 
       <div class="form-group my-3">
         <label for="exampleInputPhone">Телефон</label>
-        <input type="text" name="phone_number" class="form-control" id="exampleInputPhone" placeholder="89655305882">
+        <input type="tel" maxlength="11" name="phone_number" class="form-control" id="exampleInputPhone" placeholder="89655305882" required>
       </div>
 
       <div class="form-group my-3">
         <label for="exampleInputPassword">Пароль</label>
-        <input type="password" name="password" class="form-control" id="exampleInputPassword" placeholder="Пароль">
+        <input type="password" name="password" class="form-control" id="exampleInputPassword" placeholder="Пароль" required>
       </div>
 
       <div class="form-group my-3">
         <label for="repeatInputPassword">Повторите пароль</label>
-        <input type="password" name="repeat_password" class="form-control" id="repeatInputPassword" placeholder="Повторите пароль">
+        <input type="password" name="repeat_password" class="form-control" id="repeatInputPassword" placeholder="Повторите пароль" required>
       </div>
       <button type="submit" class="btn btn-primary mb-5">Зарегистрироваться</button>
     </form>

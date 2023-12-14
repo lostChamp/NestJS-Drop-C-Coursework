@@ -10,7 +10,9 @@ export class WareRepository {
   }
 
   async getAllWare() {
-    const lots = await this.WareModel.find({relations: ["man", "category"]});
+    const lots = await this.WareModel.find({relations: ["man", "category"], order: {
+        id: "DESC"
+      }});
     return lots;
   }
 

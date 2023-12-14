@@ -11,7 +11,9 @@ export class ServiceRepository{
   constructor(@InjectRepository(ServiceEntity) private readonly ServiceModel: Repository<ServiceEntity>) {}
 
   async getAllService() {
-    const services = this.ServiceModel.find();
+    const services = this.ServiceModel.find({order: {
+        id: "DESC"
+      }});
     return services;
   }
 

@@ -4,15 +4,15 @@
   <form method="post" action="/user/edit/{{user.id}}/complete">
     <div class="form-group mt-3">
       <label for="exampleInputEmail1">Эл.почта:</label>
-      <input type="email" name="email" class="form-control" id="editProfileEmail" value="{{user.email}}" placeholder="Введите эл.почту">
+      <input type="email" name="email" class="form-control" id="editProfileEmail" value="{{user.email}}" placeholder="Введите эл.почту" required>
     </div>
     <div class="form-group mt-3">
       <label for="exampleInputEmail1">ФИО:</label>
-      <input type="text" name="full_name" class="form-control" id="editProfileFullName" value="{{user.full_name}}" placeholder="ФИО">
+      <input type="text" name="full_name" class="form-control" id="editProfileFullName" value="{{user.full_name}}" placeholder="ФИО" required>
     </div>
     <div class="form-group mt-3">
       <label for="exampleInputEmail1">Телефон:</label>
-      <input type="text" name="phone_number" class="form-control" id="editProfilePhoneNumber" value="{{user.phone_number}}" placeholder="Телефон">
+      <input type="tel" maxlength="11" name="phone_number" class="form-control" id="editProfilePhoneNumber" value="{{user.phone_number}}" placeholder="Телефон" required>
     </div>
     <button type="submit" class="btn btn-primary mt-3 mb-3">Редактировать</button>
   </form>

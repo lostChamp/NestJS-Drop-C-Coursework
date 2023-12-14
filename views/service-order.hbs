@@ -1,7 +1,6 @@
 <div class="container  mt-5">
   <p><a class="a-for-services" href="/services">Назад</a></p>
   <h3>{{service.name}}</h3>
-  <p><b>Цена включает в себя стоимость материалов</b></p>
   <p>Описание: {{service.description}}</p>
   <p>Цена: {{service.price}}</p>
   <form method="post" class="mb-3" action="/services/order/gateway/{{service.id}}">

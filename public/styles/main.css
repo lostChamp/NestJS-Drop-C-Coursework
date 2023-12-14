@@ -33,3 +33,15 @@ body {
     width: 80%;
 }
 
+@media screen and (max-width: 1403px) {
+    .wrapper {
+        height: 500px!important;
+    }
+}
+
+@media screen and (max-width: 744px) {
+    .wrapper {
+        height: 400px!important;
+    }
+}
+

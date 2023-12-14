@@ -50,23 +50,31 @@
           </div>
           <div class="form-group mt-3">
             <label for="statusOrder">Статус: </label>
-            <input type="text" name="status" class="form-control" id="statusOrder" placeholder="Введите статус">
+            <select class="form-select" name="status">
+              <option value="В обработке" selected>В обработке</option>
+              <option value="Обработан">Обработан</option>
+              <option value="Исполняется">Исполняется</option>
+              <option value="Выполнен">Выполнен</option>
+              <option value="Доставка">Доставка</option>
+            </select>
           </div>
           <div class="form-group mt-3">
             <label for="descriptionOrder">Почта пользователя: </label>
-            <input type="text" name="user" class="form-control" id="descriptionOrder" placeholder="Ввведите почту пользователя">
+            <input type="text" name="user" class="form-control" id="descriptionOrder" placeholder="Ввведите почту пользователя" required>
           </div>
           <div class="form-group mt-3">
             <div class="addWare">
-              <label for="exampleInputEmail1">Продукт: </label>
-              <select class="form-select" id="selectAddWare" name="ware[]">
-                <option value=""></option>
-                {{#each ware}}
-                  {{#with this as | item |}}
-                    <option value="{{item.item}}">{{item.item}}</option>
-                  {{/with}}
-                {{/each}}
-              </select>
+              <div id="item">
+                <label for="exampleInputEmail1">Продукт: </label>
+                <select class="form-select" id="selectAddWare" name="ware[]">
+                  <option value=""></option>
+                  {{#each ware}}
+                    {{#with this as | item |}}
+                      <option value="{{item.item}}">{{item.item}}</option>
+                    {{/with}}
+                  {{/each}}
+                </select>
+              </div>
             </div>
             <button type="button" class="btn btn-primary mt-3" id="add_more_product">Добавить продукт</button>
           </div>

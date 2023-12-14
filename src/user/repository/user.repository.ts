@@ -37,7 +37,9 @@ export class UserRepository {
     }
 
     async getAllUsers() {
-        const users = await this.UserModel.find({relations: ["role"]});
+        const users = await this.UserModel.find({relations: ["role"], order: {
+                id: "DESC"
+            }});
         return users;
     }
 

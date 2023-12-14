@@ -6,8 +6,14 @@
     <form method="post" class="from-container" action="/order/edit/{{order.id}}/admin">
       <div class="form-group mt-3">
         <label for="statusOrder">Статус: </label>
-        <input type="text" name="status" class="form-control" id="statusOrder" value="{{order.status}}" placeholder="Введите статус">
-      </div>
+        <label for="statusOrder">Статус: </label>
+        <select class="form-select" name="status">
+          <option value="В обработке" selected>В обработке</option>
+          <option value="Обработан">Обработан</option>
+          <option value="Исполняется">Исполняется</option>
+          <option value="Выполнен">Выполнен</option>
+          <option value="Доставка">Доставка</option>
+        </select>      </div>
       <button type="submit" class="btn btn-primary mt-3 mb-3 me-3">Редактировать</button>
       <a href="/admin"><button type="button" class="btn btn-primary mt-3 mb-3 me-3">Отмена</button></a>
     </form>

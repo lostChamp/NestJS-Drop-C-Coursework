@@ -10,7 +10,9 @@ export class ManufacturerRepository {
   }
 
   async getAllMans() {
-    const man = await this.ManModel.find();
+    const man = await this.ManModel.find({order: {
+        id: "DESC"
+      }});
     return man;
   }
 

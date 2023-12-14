@@ -12,7 +12,11 @@ export class OrderRepository {
   }
 
   async getAllOrders() {
-    const orders = await this.OrderModel.find({relations: ["user", "ware", "service"]});
+    const orders = await this.OrderModel.find(
+      {relations: ["user", "ware", "service"], order: {
+          id: "DESC"
+        }},
+      );
     return orders;
   }
 

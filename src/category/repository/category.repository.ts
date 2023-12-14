@@ -10,7 +10,9 @@ export class CategoryRepository {
   }
 
   async getAllCategories() {
-    const categories = await this.CategoryModel.find();
+    const categories = await this.CategoryModel.find({order: {
+        id: "DESC"
+      }});
     return categories;
   }
 
