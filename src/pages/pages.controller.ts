@@ -34,4 +34,16 @@ export class PagesController {
         return res.render("home");
     }
 
+    @Get("/done")
+    async donePage(@Res() res: Response, @Req() req: Request) {
+        const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
+        if(token) {
+            return res.render("doneOrder", {
+                auth: token,
+                role: (token.roles === "ADMIN" || token.roles === "MASTER") && token.roles ? "ADMIN" : null,
+            });
+        }
+        return res.render("doneOrder");
+    }
+
 }

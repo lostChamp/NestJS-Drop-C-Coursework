@@ -18,7 +18,7 @@
                   <span class=" d-none d-sm-inline">Склад</span>
                 </a>
               </li>
-              <li class="nav-item border border-light border-2 rounded-pill mb-3">
+              <li class="nav-item border border-light border-2 rounded-pill mb-3" style="background-color: white">
                 <a href="/admin/orders" class="nav-link align-middle px-5">
                   <span class=" d-none d-sm-inline">Заказы</span>
                 </a>
@@ -57,14 +57,16 @@
         </p>
         <p>Описание: {{order.description}}</p>
         <form method="post" class="from-container" action="/order/edit/{{order.id}}/admin">
+          <input type="hidden" name="oldStatus" value="{{order.status}}" id="trueStatus">
           <div class="form-group mt-3">
             <label for="statusOrder">Статус: </label>
-            <select class="form-select" name="status">
-              <option value="В обработке" selected>В обработке</option>
+            <select class="form-select" name="status" id="statusOrder">
+              <option value="В обработке">В обработке</option>
               <option value="Обработан">Обработан</option>
               <option value="Исполняется">Исполняется</option>
               <option value="Выполнен">Выполнен</option>
               <option value="Доставка">Доставка</option>
+              <option value="Забракован">Забракован</option>
             </select>
           </div>
           <button type="submit" class="btn btn-primary mt-3 mb-3 me-3">Редактировать</button>

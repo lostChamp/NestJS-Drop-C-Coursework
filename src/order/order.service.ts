@@ -42,13 +42,31 @@ export class OrderService {
   async createOrder(info: CreateOrderDto) {
     const user = await this.userService.getUserByEmail(info.user);
     info.user = user;
-    await this.lotRepository.decrementArrayItemQuantity(info.ware);
     const order = await this.orderRepository.createOrder(info);
     return order;
   }
 
   async updateOrder(id: number, info: object) {
     const order = await this.orderRepository.updateOrder(id, info);
+    console.log(info);
+    const statusesNotDec = ["Обработан", "Исполняется", "Выполнен", "Доставка"];
+
+    if(info["status"] !== info["oldStatus"]) {
+      if(info["status"] === "Забракован" && info["oldStatus"] !== "В обработке") {
+        order["ware"].forEach(ware => {
+          this.lotRepository.incrementItemQuantity(ware["id"]);
+        });
+      }else if((info["oldStatus"] === "В обработке" || info["oldStatus"] === "Забракован") && statusesNotDec.includes(info["status"])) {
+        order["ware"].forEach(ware => {
+          this.lotRepository.decrementItemQuantity(ware["id"]);
+        });
+      }else if(info["oldStatus"] !== "Забракован" && info["status"] === "В обработке") {
+        order["ware"].forEach(ware => {
+          this.lotRepository.incrementItemQuantity(ware["id"]);
+        });
+      }
+    }
+
     return order;
   }
 

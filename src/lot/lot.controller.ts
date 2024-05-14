@@ -93,8 +93,7 @@ export class LotController {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
     if(token) {
       const order = await this.orderService.createProductOrder(id, info, token.id);
-      await this.lotService.decrementItemQuantity(id);
-      return res.redirect(`${process.env.BASE_URL}/home`);
+      return res.redirect(`${process.env.BASE_URL}/done`);
     }
     return res.redirect(`${process.env.BASE_URL}/auth/sign-up`);
   }

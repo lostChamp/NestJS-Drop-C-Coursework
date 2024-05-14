@@ -66,6 +66,15 @@ export class WareRepository {
     await this.WareModel.save(lot);
   }
 
+  async incrementItemQuantity(id: number) {
+    const lot = await this.WareModel.findOne({
+      where: {
+        id: id,
+      }
+    });
+    lot.quantity++;
+    await this.WareModel.save(lot);
+  }
   async decrementArrayItemQuantity(items: string[]) {
     for(let item of items) {
       const lot = await this.WareModel.findOne({

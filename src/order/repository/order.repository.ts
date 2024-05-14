@@ -90,10 +90,12 @@ export class OrderRepository {
       const order = await this.OrderModel.findOne({
         where: {
           id: id
-        }
+        },
+        relations: ["ware"],
       });
       Object.assign(order, info);
       await this.OrderModel.save(order);
+      return order;
   }
 
 }
