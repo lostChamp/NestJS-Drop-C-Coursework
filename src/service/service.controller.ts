@@ -72,5 +72,14 @@ export class ServiceController {
     return res.redirect(`${process.env.BASE_URL}/auth/sign-up`);
   }
 
+  @Roles("ADMIN")
+  @Post("/edit/:id/admin")
+  async editService(@Param("id", ParseIntPipe) id: number, @Req() req: Request,
+                    @Res() res: Response, @Body() info: object) {
+
+    const service = await this.serviceService.editService(id, info);
+    return res.redirect(`${process.env.BASE_URL}/admin/service`);
+  }
+
 
 }

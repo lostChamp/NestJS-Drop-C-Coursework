@@ -45,4 +45,16 @@ export class ServiceRepository{
     return service;
   }
 
+  async editService(id: number, info: object) {
+    const service = await this.ServiceModel.findOne({
+      where: {
+        id: id
+      }
+    });
+
+    Object.assign(service, info);
+
+    await this.ServiceModel.save(service);
+  }
+
 }

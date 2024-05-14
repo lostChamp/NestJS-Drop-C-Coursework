@@ -77,4 +77,16 @@ export class WareRepository {
       await this.WareModel.save(lot);
     }
   }
+
+  async editWare(id: number, info: object) {
+    const ware = await this.WareModel.findOne({
+      where: {
+        id: id,
+      }
+    });
+
+    Object.assign(ware, info);
+
+    await this.WareModel.save(ware);
+  }
 }

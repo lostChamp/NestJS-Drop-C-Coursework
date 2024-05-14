@@ -98,4 +98,14 @@ export class LotController {
     }
     return res.redirect(`${process.env.BASE_URL}/auth/sign-up`);
   }
+
+  @Roles('ADMIN')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Post("/edit/:id/admin")
+  async editWare(@Param("id", ParseIntPipe) id: number, @Req() req: Request,
+                 @Res() res: Response, @Body() info: object) {
+
+    const ware = await this.lotService.editWare(id, info)
+    return res.redirect(`${process.env.BASE_URL}/admin/ware`);
+  }
 }

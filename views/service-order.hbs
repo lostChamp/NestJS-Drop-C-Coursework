@@ -1,6 +1,8 @@
 <div class="container  mt-5">
   <p><a class="a-for-services" href="/services">Назад</a></p>
+  <input type="hidden" value="{{service.id}}" id="serviceID">
   <h3>{{service.name}}</h3>
+  <p id="annotation" style="font-weight: 700">В данную услуг входит "Полное обслуживание вашего инструмента"</p>
   <p>Описание: {{service.description}}</p>
   <p>Цена: {{service.price}}</p>
   <form method="post" class="mb-3" action="/services/order/gateway/{{service.id}}">

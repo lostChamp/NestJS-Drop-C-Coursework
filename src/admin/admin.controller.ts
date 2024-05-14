@@ -190,6 +190,30 @@ export class AdminController {
     })
   }
 
+  @Get("/ware/:id")
+  async editWareForm(@Res() res: Response, @Req() req: Request,
+                      @Param("id", ParseIntPipe) id: number) {
+    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
+    const ware = await this.wareService.getLotById(id);
+    return res.render("admin-edit-ware", {
+      auth: token,
+      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+      ware: ware,
+    })
+  }
+
+  @Get("/service/:id")
+  async editServiceForm(@Res() res: Response, @Req() req: Request,
+                     @Param("id", ParseIntPipe) id: number) {
+    const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
+    const service = await this.serviceService.getServiceById(id);
+    return res.render("admin-edit-service", {
+      auth: token,
+      role: token.roles === "ADMIN" && token.roles ? "ADMIN" : null,
+      service: service,
+    })
+  }
+
   @Get("/order/:id")
   async editOrderForm(@Res() res: Response, @Req() req: Request,
                      @Param("id", ParseIntPipe) id: number) {

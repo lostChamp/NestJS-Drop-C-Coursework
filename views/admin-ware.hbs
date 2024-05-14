@@ -63,7 +63,7 @@
           {{#each ware}}
             {{#with this as | item |}}
               <tr>
-                <th scope="row">{{item.id}}</th>
+                <th scope="row"><a href="/admin/ware/{{item.id}}">{{item.id}}</a></th>
                 <td>{{item.item}}</td>
                 <td>{{item.description}}</td>
                 <td>{{item.quantity}}</td>

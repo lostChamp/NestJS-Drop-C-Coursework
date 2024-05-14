@@ -10,9 +10,6 @@ import { ServiceModule } from "../service/service.module";
 import { WareRepository } from "../lot/repository/ware.respository";
 import { WareEntity } from "../lot/entity/ware.entity";
 import { UserModule } from "../user/user.module";
-import { UserService } from "../user/user.service";
-import { UserEntity } from "../user/entity/user.entity";
-import { UserRepository } from "../user/repository/user.repository";
 
 @Module({
   imports: [

@@ -40,4 +40,8 @@ export class LotService {
     await this.wareRepository.decrementItemQuantity(id);
   }
 
+  async editWare(id: number, info: object) {
+    await this.wareRepository.editWare(id, info);
+  }
+
 }

@@ -26,4 +26,9 @@ export class ServiceService {
     const service = await this.serviceRepository.createService(info);
     return service;
   }
+
+  async editService(id: number, info: object) {
+    const service = await this.serviceRepository.editService(id, info);
+    return service;
+  }
 }
