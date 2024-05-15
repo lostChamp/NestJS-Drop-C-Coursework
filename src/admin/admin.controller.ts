@@ -77,12 +77,15 @@ export class AdminController {
   @Get("/orders")
   async adminOrders (@Res() res: Response, @Req() req: Request) {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
-    const order = await this.orderService.getAllOrders();
+    const orders = await this.orderService.getAllOrders();
+    for(let i = 0; i < orders.length; i++) {
+      orders[i]["ruDate"] = (orders[i].date.toLocaleString("ru"));
+    }
     if(token) {
       return res.render("admin-orders", {
         auth: token,
         role: (token.roles === "ADMIN" || token.roles === "MASTER") && token.roles ? "ADMIN" : null,
-        order: order,
+        order: orders,
       });
     }
   }

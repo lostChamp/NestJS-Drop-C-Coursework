@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { UserEntity } from "../../user/entity/user.entity";
 import { WareEntity } from "../../lot/entity/ware.entity";
 import { ServiceEntity } from "../../service/entity/service.entity";
@@ -15,6 +15,9 @@ export class OrderEntity {
 
   @Column({nullable: false, type: "varchar"})
   status: string;
+
+  @CreateDateColumn()
+  date: Date;
 
   @ManyToOne(() => UserEntity, (user) => user.order,
     {onDelete: "CASCADE"})

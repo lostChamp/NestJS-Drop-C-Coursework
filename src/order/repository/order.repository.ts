@@ -80,7 +80,8 @@ export class OrderRepository {
 
   async createOrder(info: CreateOrderDto) {
       const order = await this.OrderModel.create({
-        ...info
+        ...info,
+        date: new Date()
       });
       await this.OrderModel.save(order);
       return order;

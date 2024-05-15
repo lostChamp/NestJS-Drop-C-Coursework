@@ -30,24 +30,34 @@ export class AuthController {
   @Post("/register/gateway")
   async registerGateway(@Body() info: CreateUserDto, @Res() res: Response, @Req() req: Request) {
     const newUser = await this.authService.registration(info);
-    const cookie = req.cookies.jwtToken;
-    if (!cookie) {
-      res.cookie('jwtToken', newUser["token"], { maxAge: 9000000, httpOnly: true });
-    }
-    if(newUser) {
+    if(newUser && !newUser.hasOwnProperty("error")) {
+      const cookie = req.cookies.jwtToken;
+      if (!cookie) {
+        res.cookie('jwtToken', newUser["token"], { maxAge: 9000000, httpOnly: true });
+      }
       return res.redirect(`${process.env.BASE_URL}/home`);
+    }else {
+      if(newUser["type"] === "password") {
+        return res.redirect(`${process.env.BASE_URL}/auth/sign-up/error/password`);
+      }
+
+      if(newUser["type"] === "email") {
+        return res.redirect(`${process.env.BASE_URL}/auth/sign-up/error/email`);
+      }
     }
   }
 
   @Post("/login/gateway")
   async loginGateway(@Body() info: LoginDto, @Res() res: Response, @Req() req: Request) {
     const token = await this.authService.login(info);
-    const cookie = req.cookies.jwtToken;
-    if (!cookie) {
-      res.cookie('jwtToken', token["token"], { maxAge: 9000000, httpOnly: true });
-    }
-    if(token) {
+    if(token && !token.hasOwnProperty("error")) {
+      const cookie = req.cookies.jwtToken;
+      if (!cookie) {
+        res.cookie('jwtToken', token["token"], { maxAge: 9000000, httpOnly: true });
+      }
       return res.redirect(`${process.env.BASE_URL}/home`);
+    }else {
+      return res.redirect(`${process.env.BASE_URL}/auth/login/error`);
     }
   }
 

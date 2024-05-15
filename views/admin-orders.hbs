@@ -51,6 +51,7 @@
           <thead>
           <tr>
             <th scope="col">#</th>
+            <th scope="col">Дата</th>
             <th scope="col">Описание</th>
             <th scope="col">Статус</th>
             <th scope="col">Заказчик</th>
@@ -63,6 +64,7 @@
             {{#with this as | item |}}
               <tr>
                 <th scope="row"><a href="/admin/order/{{item.id}}">{{item.id}}</a></th>
+                <td>{{item.ruDate}}</td>
                 <td>{{item.description}}</td>
                 <td>{{item.status}}</td>
                 <td>{{item.user.email}}</td>

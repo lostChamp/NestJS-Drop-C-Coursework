@@ -31,8 +31,24 @@ export class PagesController {
                 role: (token.roles === "ADMIN" || token.roles === "MASTER") && token.roles ? "ADMIN" : null,
             });
         }
-        return res.render("home");
+        return res.render(`home`);
     }
+
+    @Get("/auth/login/error")
+    async loginError(@Res() res: Response) {
+        res.render('login-error')
+    }
+
+    @Get("/auth/sign-up/error/email")
+    async regErrorEmail(@Res() res: Response) {
+        res.render('sign-up-error-email')
+    }
+
+    @Get("/auth/sign-up/error/password")
+    async regErrorPassword(@Res() res: Response) {
+        res.render('sign-up-error-passwords')
+    }
+
 
     @Get("/done")
     async donePage(@Res() res: Response, @Req() req: Request) {

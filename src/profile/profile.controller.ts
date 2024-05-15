@@ -15,13 +15,16 @@ export class ProfileController {
     const token = req.cookies.jwtToken ? this.jwtService.verify(req.cookies.jwtToken) : null;
     const user = await this.userService.getUserById(id);
     const orders = await this.orderService.getFiveLastOrderForProfile(id);
+    for(let i = 0; i < orders.length; i++) {
+      orders[i]["ruDate"] = (orders[i].date.toLocaleString("ru"));
+    }
     if(user) {
       return res.render("profile", {
         auth: token,
         role: (token.roles === "ADMIN" || token.roles === "MASTER") ? "ADMIN" : null,
         user: user,
         selfAccount: token && id === token.id,
-        orders: orders
+        orders: orders,
       });
     }
     return res.render("profile-not-found", {

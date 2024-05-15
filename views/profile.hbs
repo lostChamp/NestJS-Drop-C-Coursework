@@ -10,6 +10,7 @@
                   {{#each orders}}
                     {{#with this as | item |}}
                       <li class="list-group-item d-flex-wrap p-3">
+                        <p class="mb-0"><b>Дата:</b> {{item.ruDate}}</p>
                         <p class="mb-0"><b>Статус:</b> {{item.status}}</p>
                         <p class="mb-0"><b>Услуга:</b> {{item.service.name}}</p>
                         <p class="mb-0"><b>Товар(ы):</b>

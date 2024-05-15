@@ -15,6 +15,9 @@ export class AuthService {
 
     async login(userDto: LoginDto) {
         const user = await this.validateUser(userDto);
+        if(user.hasOwnProperty("error")) {
+            return user;
+        }
         return this.generateToken(user);
     }
 
@@ -22,10 +25,10 @@ export class AuthService {
         const candidate = await this.userService.getUserByEmail(userDto.email);
         const role = await this.roleService.getRoleByValue("USER");
         if(candidate) {
-            throw new HttpException("Пользователь с таким mail существует", HttpStatus.BAD_REQUEST);
+            return {error: "Пользователь с таким mail существует", type: "email"}
         }
         if(userDto.repeat_password !== userDto.password) {
-            throw new HttpException("Пароли не совпадают!", HttpStatus.BAD_REQUEST);
+            return {error: "Пароли не совпадают", type: "password"}
         }
         const hashPassword = await bcrypt.hash(userDto.password, 5);
         const user = await this.userService.createUser({...userDto, password: hashPassword}, {role: role["id"]});
@@ -42,12 +45,12 @@ export class AuthService {
     private async validateUser(userDto: LoginDto) {
         const user = await this.userService.getUserByEmail(userDto.email);
         if(!user) {
-            throw new UnauthorizedException({message: "Неверный логин/пароль"});
+            return {error: "Неверный логин/пароль"}
         }
         const passwordEquals = await bcrypt.compare(userDto.password, user.password);
         if(user && passwordEquals) {
             return user;
         }
-        throw new UnauthorizedException({message: "Неверный логин/пароль"});
+        return {error: "Неверный логин/пароль"}
     }
 }
