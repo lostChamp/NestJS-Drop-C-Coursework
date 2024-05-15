@@ -29,7 +29,8 @@ export class OrderRepository {
       status: "В обработке",
       user: {
         id: user_id
-      }
+      },
+      date: new Date(),
     });
     const newOrder = await this.OrderModel.save(
       order
@@ -45,6 +46,7 @@ export class OrderRepository {
         id: user_id
       },
       ware: [ware],
+      date: new Date(),
     });
     const newOrder = await this.OrderModel.save(
       order
